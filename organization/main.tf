@@ -1,6 +1,7 @@
 
 provider "aws" {
   region = var.aws_region
+  profile = var.aws_profile
 }
 
 terraform {
@@ -20,6 +21,3 @@ resource "aws_organizations_organization" "org" {
 
   feature_set = "ALL"
 }
-
-# terragrunt import aws_organizations_organization.org o-x4ov8148vb
-
