@@ -12,8 +12,9 @@ variable "stage" {
 }
 
 variable "name" {
-  description = "Name  (e.g. `app` or `cluster`)"
+  description = "Name"
   type        = string
+  default     = ""
 }
 
 # This module can be applied in multiple regions
@@ -21,17 +22,22 @@ variable "aws_region" {
   default = "us-east-2"
 }
 
-variable "organization_id" {
-  type        = string
-}
-variable "organization_master_account_id" {
-  type        = string
+# specify a different AWS profile to provide different access keys
+variable "aws_profile" {
+  type    = string
+  default = "default"
 }
 
-# Organizational Unit
-variable "organization_unit_name" {
-  type        = string
+# can be either a organizational_unit_id or an organization_id
+variable "parent_id" {
+  type = string
 }
+
+
+# Organizational Unit
+# variable "organization_unit_name" {
+#   type        = string
+# }
 
 # Configuration of Production account
 # The Production account will contain resources which deliver the mission capability. Access to this account is 
@@ -42,12 +48,12 @@ variable "organization_unit_name" {
 # email to associate with created member account
 variable "member_account_name" {
   description = "Member Account Name"
-  type = string
+  type        = string
 }
 # email to associate with created member account
 variable "member_account_email" {
   description = "Email to associate with created member account"
-  type = string
+  type        = string
 }
 # Specified users in the master account are granted Administrative access to each member account
 # example:
@@ -55,7 +61,7 @@ variable "member_account_email" {
 # iam_users_accessing_member_account = ["bwflood"]
 variable "iam_users_accessing_member_account" {
   description = "IAM user that will be granted access to switchrole to member account"
-  type = "list"
+  type        = "list"
 }
 
 # to establish linkage between the master account and the member account, an IAM role is created in the master account

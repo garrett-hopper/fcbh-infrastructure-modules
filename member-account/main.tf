@@ -1,6 +1,7 @@
 
 provider "aws" {
-  region = var.aws_region
+  region  = var.aws_region
+  profile = var.aws_profile
 }
 
 terraform {
@@ -18,7 +19,7 @@ terraform {
 resource "aws_organizations_account" "account" {
   name                       = var.member_account_name
   email                      = var.member_account_email
-  parent_id                  = aws_organizations_organizational_unit.org_unit.id
+  parent_id                  = var.parent_id
   role_name                  = "AdminRoleFromOrg"
   iam_user_access_to_billing = "ALLOW"
 
@@ -28,24 +29,25 @@ resource "aws_organizations_account" "account" {
   }
 }
 
-#TODO: uncomment when https://github.com/cloudposse/terraform-aws-organization-access-group/pull/16 is merged
+#TODO: refer to cloudposse repo when https://github.com/cloudposse/terraform-aws-organization-access-group/pull/16 is merged
 module "organization_access_group" {
   source      = "git::https://github.com/techfishio/terraform-aws-organization-access-group.git?ref=tags/0.6.0"
   namespace   = var.namespace
   stage       = var.stage
-  name        = "org-access-to-prod"
+  name        = var.name
   user_names  = var.iam_users_accessing_member_account
-  role_arns   = map("key", format("arn:aws:iam::%d:role/OrganizationAccountAccessRole", aws_organizations_account.account.id))
-  require_mfa = "true"
+  # role_arns   = map("key", format("arn:aws:iam::%d:role/OrganizationAccountAccessRole", aws_organizations_account.account.id))
+  role_arns = [format("arn:aws:iam::%d:role/OrganizationAccountAccessRole", aws_organizations_account.account.id)]
+  require_mfa = "false"
 }
 
-# If the organization invites an existing account, one bit of configuration is needed in the invited account
-# This module creates OrganizationAccountAccessRole role in an invited member account.
-#Note: this role is to be created in the INVITED account, not the org or master account
-#TODO figure out how to execute this the member account. need to set a different account context
-module "organization_access_role" {
-  source            = "git::https://github.com/cloudposse/terraform-aws-organization-access-role.git?ref=master"
-  master_account_id = var.organization_master_account_id
-  role_name         = "OrganizationAccountAccessRole"
-  policy_arn        = "arn:aws:iam::aws:policy/AdministratorAccess"
-}
+# Note:
+# If the organization invites an existing account, one bit of configuration is needed in the invited account, that
+# is done automatically when an account is created as part of an Organization. 
+# The role OrganizationAccountAccessRole needs to be created.
+# module "organization_access_role" {
+#   source            = "git::https://github.com/cloudposse/terraform-aws-organization-access-role.git?ref=master"
+#   master_account_id = var.organization_master_account_id
+#   role_name         = "OrganizationAccountAccessRole"
+#   policy_arn        = "arn:aws:iam::aws:policy/AdministratorAccess"
+# }

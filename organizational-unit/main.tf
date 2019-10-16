@@ -12,7 +12,7 @@ terraform {
   required_version = ">= 0.12.0"
 }
 
-# 2. Create organization unit for production. Creating separate Org Units for Prod and Non-Prod allows for more appropriate Policy Management
+# 2. Create organization unit. 
 resource "aws_organizations_organizational_unit" "org_unit" {
   name      = var.organization_unit_name
   parent_id = var.organization_id
