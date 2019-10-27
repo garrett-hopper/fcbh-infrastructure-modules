@@ -46,9 +46,23 @@ variable "tags" {
   description = "Additional tags (e.g. `map('BusinessUnit`,`XYZ`)"
 }
 
-variable "description" {
+variable "application_name" {
   type        = string
-  description = "Short description of the Environment"
+  description = "Application name, e.g. 'app' or 'cluster'"
+}
+
+variable "application_description" {
+  type        = string
+  description = "Short description of the Elastic Beanstalk Application"
+}
+
+variable "environment_name" {
+  type        = string
+  description = "Environment name"
+}
+variable "environment_description" {
+  type        = string
+  description = "Short description of the Elastic Beanstalk Environment"
 }
 
 variable "environment_type" {

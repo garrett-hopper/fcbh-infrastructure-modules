@@ -17,3 +17,4 @@ resource "aws_organizations_organizational_unit" "org_unit" {
   name      = var.organization_unit_name
   parent_id = var.organization_id
 }
+#terragrunt import aws_organizations_organizational_unit.org_unit 

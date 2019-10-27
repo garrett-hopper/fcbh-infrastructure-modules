@@ -12,7 +12,7 @@ terraform {
 }
 
 module "vpc" {
-  source     = "git::https://github.com/cloudposse/terraform-aws-vpc.git?ref=tags/0.8.0"
+  source     = "git::https://github.com/cloudposse/terraform-aws-vpc.git?ref=tags/0.8.1"
   namespace  = var.namespace
   stage      = var.stage
   name       = var.name
@@ -23,7 +23,7 @@ module "vpc" {
 }
 
 module "subnets" {
-  source               = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.16.0"
+  source               = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.16.1"
   availability_zones   = var.availability_zones
   namespace            = var.namespace
   stage                = var.stage
@@ -39,25 +39,25 @@ module "subnets" {
 }
 
 module "elastic_beanstalk_application" {
-  source      = "git::https://github.com/cloudposse/terraform-aws-elastic-beanstalk-application.git?ref=tags/0.3.0"
+  source      = "git::https://github.com/cloudposse/terraform-aws-elastic-beanstalk-application.git?ref=tags/0.4.0"
   namespace   = var.namespace
   stage       = var.stage
-  name        = var.name
+  name        = var.application_name
   attributes  = var.attributes
   tags        = var.tags
   delimiter   = var.delimiter
-  description = "Test elastic_beanstalk_application"
+  description = var.application_description
 }
 
 module "elastic_beanstalk_environment" {
-  source                     = "git::https://github.com/cloudposse/terraform-aws-elastic-beanstalk-environment.git?ref=tags/0.16.0"
+  source                     = "git::https://github.com/cloudposse/terraform-aws-elastic-beanstalk-environment.git?ref=tags/0.17.0"
   namespace                  = var.namespace
   stage                      = var.stage
-  name                       = var.name
+  name                       = var.environment_name
   attributes                 = var.attributes
   tags                       = var.tags
   delimiter                  = var.delimiter
-  description                = var.description
+  description                = var.environment_description
   region                     = var.aws_region
   availability_zone_selector = var.availability_zone_selector
   dns_zone_id                = var.dns_zone_id
