@@ -29,3 +29,7 @@ variable "aws_profile" {
 variable "vpc_id" {
   type    = string
 }
+
+variable "subnets" {
+  type = list(string)
+}

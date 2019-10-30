@@ -19,53 +19,53 @@ module "rds_cluster_aurora_mysql" {
   namespace       = var.namespace
   stage           = var.stage
   name            = var.name
-  admin_user      = "admin1"
+  admin_user      = "sa"
   admin_password  = "Test123456789"
-  db_name         = "dbp-dev"
+  db_name         = "dbp_dev"
   instance_type   = "db.t2.small"
   vpc_id          = var.vpc_id
-  security_groups = [var.vpc.vpc_default_security_group_id]
-  subnets         = ["subnet-xxxxxxxx", "subnet-xxxxxxxx"]
+  # security_groups = [var.vpc.vpc_default_security_group_id]
+  subnets         = var.subnets
   zone_id         = "Zxxxxxxxx"
 
-  cluster_parameters = [
-    {
-      name  = "character_set_client"
-      value = "utf8"
-    },
-    {
-      name  = "character_set_connection"
-      value = "utf8"
-    },
-    {
-      name  = "character_set_database"
-      value = "utf8"
-    },
-    {
-      name  = "character_set_results"
-      value = "utf8"
-    },
-    {
-      name  = "character_set_server"
-      value = "utf8"
-    },
-    {
-      name  = "collation_connection"
-      value = "utf8_bin"
-    },
-    {
-      name  = "collation_server"
-      value = "utf8_bin"
-    },
-    {
-      name         = "lower_case_table_names"
-      value        = "1"
-      apply_method = "pending-reboot"
-    },
-    {
-      name         = "skip-character-set-client-handshake"
-      value        = "1"
-      apply_method = "pending-reboot"
-    }
-  ]
+  # cluster_parameters = [
+  #   {
+  #     name  = "character_set_client"
+  #     value = "utf8"
+  #   },
+  #   {
+  #     name  = "character_set_connection"
+  #     value = "utf8"
+  #   },
+  #   {
+  #     name  = "character_set_database"
+  #     value = "utf8"
+  #   },
+  #   {
+  #     name  = "character_set_results"
+  #     value = "utf8"
+  #   },
+  #   {
+  #     name  = "character_set_server"
+  #     value = "utf8"
+  #   },
+  #   {
+  #     name  = "collation_connection"
+  #     value = "utf8_bin"
+  #   },
+  #   {
+  #     name  = "collation_server"
+  #     value = "utf8_bin"
+  #   },
+  #   {
+  #     name         = "lower_case_table_names"
+  #     value        = "1"
+  #     apply_method = "pending-reboot"
+  #   },
+  #   {
+  #     name         = "skip-character-set-client-handshake"
+  #     value        = "1"
+  #     apply_method = "pending-reboot"
+  #   }
+  # ]
 }
