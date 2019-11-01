@@ -24,7 +24,7 @@ module "rds_cluster_aurora_mysql" {
   db_name         = "dbp_dev"
   instance_type   = "db.t2.small"
   vpc_id          = var.vpc_id
-  # security_groups = [var.vpc.vpc_default_security_group_id]
+  security_groups = ["sg-07999a58f9faa62f1"]
   subnets         = var.subnets
   zone_id         = "Zxxxxxxxx"
 
