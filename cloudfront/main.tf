@@ -24,7 +24,7 @@ module "cloudfront_s3_cdn" {
   compress                 = true
   cors_allowed_headers     = ["Authorization"]
   cors_allowed_methods     = ["GET"]
-  cors_allowed_origins     = ["*.fcbh.org","content.cdn.dbp-prod.dbp4.org"]
+  cors_allowed_origins     = var.cors_allowed_origins
   cors_expose_headers      = ["ETag"]
   default_ttl              = 86400
   parent_zone_id           = var.parent_zone_id
@@ -43,4 +43,11 @@ resource "aws_s3_bucket_object" "index" {
   source       = "${path.module}/index.html"
   content_type = "text/html"
   etag         = md5(file("${path.module}/index.html"))
+}
+
+resource "aws_s3_bucket_public_access_block" "cloudfront-origin" {
+  bucket = module.cloudfront_s3_cdn.s3_bucket
+
+  block_public_acls   = true
+  block_public_policy = true
 }

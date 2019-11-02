@@ -54,3 +54,8 @@ variable "minimum_protocol_version" {
   description = "Cloudfront TLS minimum protocol version"
   default     = "TLSv1"
 }
+variable "cors_allowed_origins" {
+  type        = list(string)
+  default     = []
+  description = "List of allowed origins (e.g. example.com, test.com) for S3 bucket"
+}
