@@ -26,6 +26,31 @@ variable "aws_profile" {
   default = "bibleis-admin"
 }
 
-variable "parent_zone_name" {
-  type    = string
+variable "parent_zone_id" {
+  type        = string
+  default     = ""
+  description = "ID of the hosted zone to contain this record  (or specify `parent_zone_name`)"
+}
+
+variable "aliases" {
+  type        = list(string)
+  description = "List of FQDN's - Used to set the Alternate Domain Names (CNAMEs) setting on Cloudfront"
+  default     = []
+}
+
+variable "log_prefix" {
+  type        = string
+  default     = ""
+  description = "Path of logs in S3 bucket"
+}
+
+variable "acm_certificate_arn" {
+  type        = string
+  description = "Existing ACM Certificate ARN"
+  default     = ""
+}
+variable "minimum_protocol_version" {
+  type        = string
+  description = "Cloudfront TLS minimum protocol version"
+  default     = "TLSv1"
 }

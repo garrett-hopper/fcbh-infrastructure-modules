@@ -12,17 +12,29 @@ terraform {
 }
 
 module "cloudfront_s3_cdn" {
-  source          = "git::https://github.com/cloudposse/terraform-aws-cloudfront-s3-cdn.git?ref=master"
-  namespace                = var.namespace
-  stage                    = var.stage
-  name                     = var.name
-  parent_zone_name         = var.parent_zone_name
-  use_regional_s3_endpoint = true
-  origin_force_destroy     = true
-  cors_allowed_headers     = ["*"]
-  cors_allowed_methods     = ["GET", "HEAD"]
-  cors_allowed_origins     = ["*.fcbh.org"]
+  source    = "git::https://github.com/cloudposse/terraform-aws-cloudfront-s3-cdn.git?ref=master"
+  namespace = var.namespace
+  stage     = var.stage
+  name      = var.name
+
+  acm_certificate_arn      = var.acm_certificate_arn
+  aliases                  = var.aliases
+  allowed_methods          = ["GET", "HEAD", "OPTIONS"]
+  cached_methods           = ["GET", "HEAD", "OPTIONS"]
+  compress                 = true
+  cors_allowed_headers     = ["Authorization"]
+  cors_allowed_methods     = ["GET"]
+  cors_allowed_origins     = ["*.fcbh.org","content.cdn.dbp-prod.dbp4.org"]
   cors_expose_headers      = ["ETag"]
+  default_ttl              = 86400
+  parent_zone_id           = var.parent_zone_id
+  log_prefix               = var.log_prefix
+  minimum_protocol_version = var.minimum_protocol_version
+  origin_force_destroy     = false
+  price_class              = "PriceClass_All"
+  trusted_signers          = ["self"]
+  use_regional_s3_endpoint = true
+  viewer_protocol_policy   = "allow-all"
 }
 
 resource "aws_s3_bucket_object" "index" {
