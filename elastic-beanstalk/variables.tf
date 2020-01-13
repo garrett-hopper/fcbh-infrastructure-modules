@@ -88,6 +88,11 @@ variable "environment_type" {
   default     = "LoadBalanced"
 }
 
+variable "force_destroy" {
+  type        = bool
+  default     = false
+  description = "Force destroy the S3 bucket for load balancer logs"
+}
 variable "health_streaming_enabled" {
   #Cloudposse default: false
   type        = bool

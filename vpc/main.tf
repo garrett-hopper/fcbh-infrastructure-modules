@@ -17,7 +17,7 @@ terraform {
 data "aws_availability_zones" "available" {}
 
 locals {
-  max_availability_zones = 2
+  max_availability_zones = 3
 }
 
 module "vpc" {
@@ -28,45 +28,45 @@ module "vpc" {
   cidr_block = var.cidr_block
 }
 
-# module "subnets" {
-#   source             = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.16.1"
-#   availability_zones = slice(data.aws_availability_zones.available.names, 0, local.max_availability_zones)
+module "subnets" {
+  source             = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.16.1"
+  availability_zones = slice(data.aws_availability_zones.available.names, 0, local.max_availability_zones)
+  namespace          = var.namespace
+  stage              = var.stage
+  name               = var.name
+  vpc_id              = module.vpc.vpc_id
+  igw_id              = module.vpc.igw_id
+  cidr_block          = module.vpc.vpc_cidr_block
+  nat_gateway_enabled = "true"
+}
+
+# locals {
+#   public_cidr_block  = cidrsubnet(var.cidr_block, 1, 0)
+#   private_cidr_block = cidrsubnet(var.cidr_block, 1, 1)
+# }
+
+# module "public_subnets" {
+#   source            = "git::https://github.com/cloudposse/terraform-aws-named-subnets.git?ref=tags/0.4.0"
+#   availability_zone = var.availability_zone
 #   namespace          = var.namespace
 #   stage              = var.stage
 #   name               = var.name
-#   vpc_id              = module.vpc.vpc_id
-#   igw_id              = module.vpc.igw_id
-#   cidr_block          = module.vpc.vpc_cidr_block
-#   nat_gateway_enabled = "true"
+#   subnet_names      = ["public1", "public2"]
+#   vpc_id            = module.vpc.vpc_id
+#   cidr_block        = local.public_cidr_block
+#   type              = "public"
+#   igw_id            = module.vpc.igw_id
 # }
 
-locals {
-  public_cidr_block  = cidrsubnet(var.vpc_cidr_block, 1, 0)
-  private_cidr_block = cidrsubnet(var.vpc_cidr_block, 1, 1)
-}
-
-module "public_subnets" {
-  source            = "git::https://github.com/cloudposse/terraform-aws-named-subnets.git?ref=master"
-  namespace          = var.namespace
-  stage              = var.stage
-  name               = var.name
-  subnet_names      = ["public1", "public2"]
-  vpc_id            = module.vpc.vpc_id
-  cidr_block        = local.public_cidr_block
-  type              = "public"
-  igw_id            = module.vpc.igw_id
-  availability_zone = "us-east-1a"
-}
-
-module "private_subnets" {
-  source            = "git::https://github.com/cloudposse/terraform-aws-named-subnets.git?ref=master"
-  namespace          = var.namespace
-  stage              = var.stage
-  name               = var.name
-  subnet_names      = ["private1", "private2"]
-  vpc_id            = module.vpc.vpc_id
-  cidr_block        = local.private_cidr_block
-  type              = "private"
-  availability_zone = "us-east-1a"
-  ngw_id            = module.public_subnets.ngw_id
-}
+# module "private_subnets" {
+#   source            = "git::https://github.com/cloudposse/terraform-aws-named-subnets.git?ref=tags/0.4.0"
+#   availability_zone = var.availability_zone
+#   namespace          = var.namespace
+#   stage              = var.stage
+#   name               = var.name
+#   subnet_names      = ["private1", "private2"]
+#   vpc_id            = module.vpc.vpc_id
+#   cidr_block        = local.private_cidr_block
+#   type              = "private"
+#   ngw_id            = module.public_subnets.ngw_id
+# }
