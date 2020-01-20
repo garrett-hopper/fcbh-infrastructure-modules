@@ -12,21 +12,22 @@ terraform {
 }
 
 module "rds_cluster_aurora_mysql" {
-  source          = "git::https://github.com/cloudposse/terraform-aws-rds-cluster.git?ref=tags/0.18.0"
-  engine          = "aurora"
-  cluster_family  = "aurora-mysql5.6"
-  cluster_size    = "2"
-  namespace       = var.namespace
-  stage           = var.stage
-  name            = var.name
-  admin_user      = "sa"
-  admin_password  = "Test123456789"
-  db_name         = "dbp_dev"
-  instance_type   = "db.t2.small"
-  vpc_id          = var.vpc_id
-  security_groups = ["sg-07999a58f9faa62f1"]
-  subnets         = var.subnets
-  zone_id         = "Zxxxxxxxx"
+  source              = "git::https://github.com/cloudposse/terraform-aws-rds-cluster.git?ref=tags/0.19.0"
+  engine              = "aurora"
+  cluster_family      = "aurora5.6"
+  cluster_size        = "2"
+  namespace           = var.namespace
+  stage               = var.stage
+  name                = var.name
+  admin_user          = "sa"
+  admin_password      = "Test123456789"
+  db_name             = var.db_name
+  instance_type       = var.instance_type
+  snapshot_identifier = var.snapshot_identifier
+  vpc_id              = var.vpc_id
+  security_groups     = var.security_groups
+  subnets             = var.subnets
+  zone_id             = var.zone_id
 
   # cluster_parameters = [
   #   {
