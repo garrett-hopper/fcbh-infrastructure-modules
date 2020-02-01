@@ -47,7 +47,7 @@ variable "subnets" {
 
 variable "instance_type" {
   type        = string
-  default     = "db.t2.small"
+  default     = "db.t3.micro"
   description = "Instance type to use"
 }
 
