@@ -51,3 +51,7 @@ module "host" {
 
   associate_public_ip_address = true
 }
+
+# TODO
+# get a linux2 instance that doesn't need a yum update
+# add to user content: sudo yum install mysql
