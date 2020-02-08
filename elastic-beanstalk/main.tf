@@ -20,3 +20,22 @@ module "acm_request_certificate" {
   subject_alternative_names = var.subject_alternative_names
   tags                      = var.tags
 }
+
+module "memcached" {
+  source                  = "git::https://github.com/cloudposse/terraform-aws-elasticache-memcached.git?ref=master"
+  namespace               = var.namespace
+  stage                   = var.stage
+  name                    = var.name
+  availability_zones      = var.availability_zones
+  vpc_id                  = var.vpc_id #module.vpc.vpc_id
+  allowed_security_groups = [module.vpc.vpc_default_security_group_id]
+  subnets                 = var.private_subnets #module.subnets.private_subnet_ids
+  cluster_size            = var.cluster_size
+  instance_type           = var.instance_type
+  engine_version          = var.engine_version
+  apply_immediately       = true
+  zone_id                 = var.zone_id
+}
+
+
+#https://us-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/faithcomesbyhearing-dbp-infrastructure/browse?region=us-west-2
