@@ -5,8 +5,7 @@ variable "aws_region" {
 
 # specify a different AWS profile to provide different access keys
 variable "aws_profile" {
-  type    = string
-  default = "bibleis-admin"
+  type = string
 }
 
 variable "domain_name" {
