@@ -1,0 +1,87 @@
+auth into fostermade
+
+https://us-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/faithcomesbyhearing-dbp-infrastructure/files/edit/refs/heads/master/--/modules/data/main.tf?region=us-west-2
+
+module "db_security_group" {
+  source = "terraform-aws-modules/security-group/aws"
+
+  vpc_id = "${var.vpc_id}"
+  name   = "${var.sg_name}"
+
+  tags = {
+    Name = "${var.sg_name}"
+  }
+
+  computed_ingress_with_source_security_group_id  = [
+    {
+      rule                     = "mysql-tcp"
+      source_security_group_id = "${var.bastion_sg_id}"
+    },
+    {
+      rule                     = "mysql-tcp"
+      source_security_group_id = "${var.api_sg_id}"
+    }
+  ]
+  number_of_computed_ingress_with_source_security_group_id = 2
+}
+
+resource "aws_db_parameter_group" "dbp_custom_params" {
+  name        = "dbp-custom-params"
+  family      = "aurora5.6"
+
+  parameter {
+    name  = "group_concat_max_len"
+    value = "320000"
+  }
+
+  parameter {
+    name  = "max_allowed_packet"
+    value = "512000000"
+  }
+}
+
+module "db_cluster" {
+  source = "terraform-aws-modules/rds-aurora/aws"
+
+  name          = "${var.cluster_name}"
+  vpc_id        = "${var.vpc_id}"
+  instance_type = "${var.writer_instance_type}"
+  subnets       = ["${var.subnets}"]
+
+  engine                  = "aurora"
+  database_name           = "${var.database_name}"
+  db_parameter_group_name = "${aws_db_parameter_group.dbp_custom_params.name}"
+
+  username = "${var.username}"
+  password = "${var.password}"
+
+  replica_count = "0"
+
+  performance_insights_enabled    = "true"
+
+  enabled_cloudwatch_logs_exports = ["error", "general", "slowquery"]
+
+  allowed_security_groups       = ["${var.bastion_sg_id}", "${var.api_sg_id}"]
+  allowed_security_groups_count = "2"
+
+  backup_retention_period = "30"
+  iam_database_authentication_enabled = "true"
+
+  apply_immediately          = "false"
+  auto_minor_version_upgrade = "true"
+
+  deletion_protection = "true"
+  storage_encrypted   = "false"
+}
+
+resource "aws_rds_cluster_instance" "writer" {
+  cluster_identifier = "${module.db_cluster.this_rds_cluster_id}"
+  instance_class     = "${var.writer_instance_type}"
+  identifier         = "${replace(var.cluster_name, "cluster", "writer")}"
+}
+
+resource "aws_rds_cluster_instance" "reader" {
+  cluster_identifier = "${module.db_cluster.this_rds_cluster_id}"
+  instance_class     = "${var.reader_instance_type}"
+  identifier         = "${replace(var.cluster_name, "cluster", "reader")}"
+}
