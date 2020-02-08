@@ -14,12 +14,12 @@ terraform {
 # the initial configuration will create the resources necessary for the eb command line to create the beanstalk application and enviroment
 # the beanstalk configuration will initially deploy into the default VPC
 
-module "acm_request_certificate" {
-  source                    = "git::https://github.com/cloudposse/terraform-aws-acm-request-certificate.git?ref=master"
-  domain_name               = var.domain_name
-  subject_alternative_names = var.subject_alternative_names
-  tags                      = var.tags
-}
+# module "acm_request_certificate" {
+#   source                    = "git::https://github.com/cloudposse/terraform-aws-acm-request-certificate.git?ref=master"
+#   domain_name               = var.domain_name
+#   subject_alternative_names = var.subject_alternative_names
+#   tags                      = var.tags
+# }
 
 module "memcached" {
   source                  = "git::https://github.com/cloudposse/terraform-aws-elasticache-memcached.git?ref=master"
@@ -28,7 +28,7 @@ module "memcached" {
   name                    = var.name
   availability_zones      = var.availability_zones
   vpc_id                  = var.vpc_id #module.vpc.vpc_id
-  allowed_security_groups = [module.vpc.vpc_default_security_group_id]
+  allowed_security_groups = var.allowed_security_groups
   subnets                 = var.private_subnets #module.subnets.private_subnet_ids
   cluster_size            = var.cluster_size
   instance_type           = var.instance_type

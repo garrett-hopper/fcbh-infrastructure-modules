@@ -20,3 +20,7 @@ output "bastion_subnet_id" {
   description = "Subnet Id containing the bastion host"
   value       = module.subnets.public_subnet_ids[0]
 }
+output "availability_zones" {
+  description = "List of Availability Zones where subnets were created"
+  value       = module.subnets.availability_zones
+}

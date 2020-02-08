@@ -102,3 +102,9 @@ variable "elasticache_parameter_group_family" {
   description = "ElastiCache parameter group family"
   default     = "memcached1.5"
 }
+
+variable "allowed_security_groups" {
+  type        = list(string)
+  default     = []
+  description = "List of Security Group IDs that are allowed ingress to the cluster's Security Group created in the module"
+}
