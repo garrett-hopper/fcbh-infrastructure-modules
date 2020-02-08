@@ -22,19 +22,21 @@ terraform {
 # }
 
 module "memcached" {
-  source                  = "git::https://github.com/cloudposse/terraform-aws-elasticache-memcached.git?ref=master"
-  namespace               = var.namespace
-  stage                   = var.stage
-  name                    = var.name
-  availability_zones      = var.availability_zones
-  vpc_id                  = var.vpc_id #module.vpc.vpc_id
-  allowed_security_groups = var.allowed_security_groups
-  subnets                 = var.private_subnets #module.subnets.private_subnet_ids
-  cluster_size            = var.cluster_size
-  instance_type           = var.instance_type
-  engine_version          = var.engine_version
-  apply_immediately       = true
-  zone_id                 = var.zone_id
+  source                       = "git::https://github.com/cloudposse/terraform-aws-elasticache-memcached.git?ref=tags/0.3.0"
+  namespace                    = var.namespace
+  stage                        = var.stage
+  name                         = var.name
+  availability_zones           = var.availability_zones
+  vpc_id                       = var.vpc_id 
+  use_existing_security_groups = true
+  existing_security_groups     = var.allowed_security_groups
+  allowed_security_groups      = var.allowed_security_groups
+  subnets                      = var.private_subnets 
+  cluster_size                 = var.cluster_size
+  instance_type                = var.instance_type
+  engine_version               = var.engine_version
+  apply_immediately            = true
+  zone_id                      = var.zone_id
 }
 
 

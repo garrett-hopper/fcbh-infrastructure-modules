@@ -54,7 +54,6 @@ variable "vpc_id" {
 
 variable "private_subnets" {
   type        = list(string)
-  default     = []
   description = "AWS subnet ids"
 }
 variable "cluster_size" {
