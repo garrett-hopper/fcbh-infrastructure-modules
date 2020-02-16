@@ -39,16 +39,25 @@ module "security_group" {
   egress_rules       = ["all-all"]
 }
 
+locals {
+  user_data = <<EOF
+#!/bin/bash
+echo 'Woot!' > /home/ec2-user/user-script-output.txt
+yum update -y
+yum install mysql -y
+EOF
+}
+
 module "host" {
   source = "terraform-aws-modules/ec2-instance/aws"
 
-  name                   = var.host_name
-  vpc_security_group_ids = [module.security_group.this_security_group_id]
-  ami                    = data.aws_ami.linux2.id
-  instance_type          = var.instance_type
-  subnet_id              = var.subnet_id
-  key_name               = var.key_name
-
+  name                        = var.host_name
+  vpc_security_group_ids      = [module.security_group.this_security_group_id]
+  ami                         = data.aws_ami.linux2.id
+  instance_type               = var.instance_type
+  subnet_id                   = var.subnet_id
+  key_name                    = var.key_name
+  user_data                   = local.user_data
   associate_public_ip_address = true
 }
 
