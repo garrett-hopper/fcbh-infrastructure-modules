@@ -12,7 +12,7 @@ terraform {
 }
 
 module "rds_cluster_aurora_mysql" {
-  source              = "git::https://github.com/cloudposse/terraform-aws-rds-cluster.git?ref=tags/0.19.0"
+  source              = "git::https://github.com/cloudposse/terraform-aws-rds-cluster.git?ref=tags/0.21.0"
   engine              = "aurora"
   cluster_family      = "aurora5.6"
   cluster_size        = "2"
@@ -20,7 +20,6 @@ module "rds_cluster_aurora_mysql" {
   stage               = var.stage
   name                = var.name
   admin_user          = "sa"
-  admin_password      = "Test123456789"
   db_name             = var.db_name
   instance_type       = var.instance_type
   snapshot_identifier = var.snapshot_identifier
