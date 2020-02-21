@@ -176,6 +176,13 @@ variable "additional_security_groups" {
   description = "List of security groups to be allowed to connect to the EC2 instances"
   default     = []
 }
+
+variable "elasticache_port" {
+  type        = number
+  default     = 11211
+  description = "Memcached port"
+}
+
 # variable "version_label" {
 #   type        = string
 #   description = "Elastic Beanstalk Application version to deploy"

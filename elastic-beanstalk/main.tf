@@ -61,30 +61,25 @@ module "elastic_beanstalk_environment" {
   keypair                            = var.keypair
 }
 
+# basic elasticache resource creation. The actual cache will be created in beanstalk
+resource "aws_elasticache_subnet_group" "dbp-cache" {
+  name       = "dbp-elasticache-subnet"
+  subnet_ids = var.private_subnets
+}
+
+resource "aws_security_group_rule" "allow_cache_access_from_beanstalk" {
+  type              = "ingress"
+  from_port         = var.elasticache_port
+  to_port           = elasticache_port
+  protocol          = "tcp"
+  security_group_id = aws_security_group.default.id
+}
 
 # module "acm_request_certificate" {
 #   source                    = "git::https://github.com/cloudposse/terraform-aws-acm-request-certificate.git?ref=master"
 #   domain_name               = var.domain_name
 #   subject_alternative_names = var.subject_alternative_names
 #   tags                      = var.tags
-# }
-
-# module "memcached" {
-#   source                       = "git::https://github.com/cloudposse/terraform-aws-elasticache-memcached.git?ref=tags/0.3.0"
-#   namespace                    = var.namespace
-#   stage                        = var.stage
-#   name                         = var.name
-#   availability_zones           = var.availability_zones
-#   vpc_id                       = var.vpc_id 
-#   use_existing_security_groups = true
-#   existing_security_groups     = var.allowed_security_groups
-#   allowed_security_groups      = var.allowed_security_groups
-#   subnets                      = var.private_subnets 
-#   cluster_size                 = var.cluster_size
-#   instance_type                = var.instance_type
-#   engine_version               = var.engine_version
-#   apply_immediately            = true
-#   zone_id                      = var.zone_id
 # }
 
 

@@ -29,16 +29,18 @@ module "vpc" {
 }
 
 module "subnets" {
-  source             = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.19.0"
-  availability_zones = slice(data.aws_availability_zones.available.names, 0, local.max_availability_zones)
-  namespace          = var.namespace
-  stage              = var.stage
-  name               = var.name
+  source              = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.19.0"
+  availability_zones  = slice(data.aws_availability_zones.available.names, 0, local.max_availability_zones)
+  namespace           = var.namespace
+  stage               = var.stage
+  name                = var.name
   vpc_id              = module.vpc.vpc_id
   igw_id              = module.vpc.igw_id
   cidr_block          = module.vpc.vpc_cidr_block
   nat_gateway_enabled = "true"
 }
+
+
 
 # locals {
 #   public_cidr_block  = cidrsubnet(var.cidr_block, 1, 0)

@@ -10,6 +10,7 @@ terraform {
   # The latest version of Terragrunt (v0.19.0 and above) requires Terraform 0.12.0 or above.
   required_version = ">= 0.12.0"
 }
+
 data "aws_ami" "linux2" {
   most_recent = true
 
@@ -63,4 +64,4 @@ module "host" {
 
 # TODO
 # get a linux2 instance that doesn't need a yum update
-# add to user content: sudo yum install mysql
+
