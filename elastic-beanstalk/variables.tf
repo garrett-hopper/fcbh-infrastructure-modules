@@ -183,6 +183,78 @@ variable "elasticache_port" {
   description = "Memcached port"
 }
 
+# elasticcache
+variable "availability_zones" {
+  type        = list(string)
+  description = "List of Availability Zones for the cluster"
+}
+variable "cluster_size" {
+  type        = number
+  default     = 1
+  description = "Cluster size"
+}
+variable "engine_version" {
+  type        = string
+  default     = "1.5.16"
+  description = "Memcached engine version. For more info, see https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/supported-engine-versions.html"
+}
+variable "zone_id" {
+  type        = string
+  default     = ""
+  description = "Route53 DNS Zone ID"
+}
+variable "use_existing_security_groups" {
+  type        = bool
+  description = "Flag to enable/disable creation of Security Group in the module. Set to `true` to disable Security Group creation and provide a list of existing security Group IDs in `existing_security_groups` to place the cluster into"
+  default     = false
+}
+
+variable "existing_security_groups" {
+  type        = list(string)
+  default     = []
+  description = "List of existing Security Group IDs to place the cluster into. Set `use_existing_security_groups` to `true` to enable using `existing_security_groups` as Security Groups for the cluster"
+}
+
+variable "memcached_instance_type" {
+  type        = string
+  default     = "cache.t3.small"
+  description = "Elastic cache instance type"
+}
+
+
+
+
+# variable "private_subnets" {
+#   type        = list(string)
+#   description = "AWS subnet ids"
+# }
+
+
+
+
+
+
+
+
+
+
+# variable "port" {
+#   type        = number
+#   default     = 11211
+#   description = "Memcached port"
+# }
+# variable "elasticache_subnet_group_name" {
+#   type        = string
+#   description = "Subnet group name for the ElastiCache instance"
+#   default     = "elasticache-subnet-group"
+# }
+
+# variable "elasticache_parameter_group_family" {
+#   type        = string
+#   description = "ElastiCache parameter group family"
+#   default     = "memcached1.5"
+# }
+
 # variable "version_label" {
 #   type        = string
 #   description = "Elastic Beanstalk Application version to deploy"
@@ -243,56 +315,5 @@ variable "elasticache_port" {
 # }
 
 
-# elasticcache
 
-
-# variable "private_subnets" {
-#   type        = list(string)
-#   description = "AWS subnet ids"
-# }
-# variable "cluster_size" {
-#   type        = number
-#   default     = 1
-#   description = "Cluster size"
-# }
-
-# variable "instance_type" {
-#   type        = string
-#   default     = "cache.t2.small"
-#   description = "Elastic cache instance type"
-# }
-
-# variable "engine_version" {
-#   type        = string
-#   default     = "1.5.16"
-#   description = "Memcached engine version. For more info, see https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/supported-engine-versions.html"
-# }
-
-# variable "availability_zones" {
-#   type        = list(string)
-#   description = "List of Availability Zones for the cluster"
-# }
-
-# variable "zone_id" {
-#   type        = string
-#   default     = ""
-#   description = "Route53 DNS Zone ID"
-# }
-
-# variable "port" {
-#   type        = number
-#   default     = 11211
-#   description = "Memcached port"
-# }
-# variable "elasticache_subnet_group_name" {
-#   type        = string
-#   description = "Subnet group name for the ElastiCache instance"
-#   default     = "elasticache-subnet-group"
-# }
-
-# variable "elasticache_parameter_group_family" {
-#   type        = string
-#   description = "ElastiCache parameter group family"
-#   default     = "memcached1.5"
-# }
 

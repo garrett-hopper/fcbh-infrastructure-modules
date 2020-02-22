@@ -14,9 +14,13 @@ terraform {
 # the initial terraform configuration will create the resources necessary for the eb command line to create the beanstalk application and enviroment
 # the beanstalk configuration will initially deploy into the default VPC
 
-data "aws_security_group" "default" {
-  vpc_id = var.vpc_id
-  name   = "default"
+# data "aws_security_group" "default" {
+#   vpc_id = var.vpc_id
+#   name   = "default"
+# }
+
+data "aws_availability_zones" "all" {
+  state = "available"
 }
 
 module "elastic_beanstalk_application" {
@@ -62,19 +66,40 @@ module "elastic_beanstalk_environment" {
 }
 
 # basic elasticache resource creation. The actual cache will be created in beanstalk
-resource "aws_elasticache_subnet_group" "dbp-cache" {
-  name       = "dbp-elasticache-subnet"
-  subnet_ids = var.private_subnets
+# resource "aws_elasticache_subnet_group" "dbp-cache" {
+#   name       = "dbp-elasticache-subnet"
+#   subnet_ids = var.private_subnets
+# }
+
+# resource "aws_security_group_rule" "allow_cache_access_from_beanstalk" {
+#   type                     = "ingress"
+#   from_port                = var.elasticache_port
+#   to_port                  = var.elasticache_port
+#   protocol                 = "tcp"
+#   source_security_group_id = data.aws_security_group.default.id
+#   security_group_id        = data.aws_security_group.default.id
+# }
+
+module "memcached" {
+  source                       = "git::https://github.com/cloudposse/terraform-aws-elasticache-memcached.git?ref=tags/0.3.0"
+  namespace                    = var.namespace
+  stage                        = var.stage
+  name                         = "cache"
+  availability_zones           = data.aws_availability_zones.all.names
+  vpc_id                       = var.vpc_id
+  # use_existing_security_groups = true
+  # existing_security_groups     = var.allowed_security_groups
+  allowed_security_groups      = [module.elastic_beanstalk_environment.security_group_id]
+  subnets                      = var.private_subnets
+  cluster_size                 = var.cluster_size
+  instance_type                = var.memcached_instance_type
+  engine_version               = var.engine_version
+  apply_immediately            = true
+  zone_id                      = var.zone_id
 }
 
-resource "aws_security_group_rule" "allow_cache_access_from_beanstalk" {
-  type              = "ingress"
-  from_port         = var.elasticache_port
-  to_port           = var.elasticache_port
-  protocol          = "tcp"
-  source_security_group_id = data.aws_security_group.default.id  
-  security_group_id = data.aws_security_group.default.id
-}
+
+
 
 # module "acm_request_certificate" {
 #   source                    = "git::https://github.com/cloudposse/terraform-aws-acm-request-certificate.git?ref=master"

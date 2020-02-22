@@ -15,10 +15,10 @@
 
 
 
-output "launch_configuration_security_group" {
-  value       = data.aws_security_group.default.id
-  description = "Launch Configuration Security Group ID"
-}
+# output "launch_configuration_security_group" {
+#   value       = data.aws_security_group.default.id
+#   description = "Launch Configuration Security Group ID"
+# }
 
 # beanstalk outputs
 output "elastic_beanstalk_application_name" {
@@ -84,10 +84,17 @@ output "elastic_beanstalk_environment_triggers" {
   description = "Autoscaling triggers in use by this environment"
   value       = module.elastic_beanstalk_environment.triggers
 }
-
-output "elasticache_subnet_group_name" {
-  value       = aws_elasticache_subnet_group.dbp-cache.name
+output "cluster_configuration_endpoint" {
+  value       = module.memcached.cluster_configuration_endpoint
+  description = "Cluster configuration endpoint"
 }
+output "cluster_address" {
+  value       = module.memcached.cluster_address
+  description = "Cluster address"
+}
+# output "elasticache_subnet_group_name" {
+#   value       = aws_elasticache_subnet_group.dbp-cache.name
+# }
 # output "cluster_id" {
 #   value       = module.memcached.cluster_id
 #   description = "Cluster ID"
@@ -97,15 +104,9 @@ output "elasticache_subnet_group_name" {
 #   description = "Security Group ID"
 # }
 
-# output "cluster_address" {
-#   value       = join("", aws_elasticache_cluster.default.*.cluster_address)
-#   description = "Cluster address"
-# }
 
-# output "cluster_configuration_endpoint" {
-#   value       = join("", aws_elasticache_cluster.default.*.configuration_endpoint)
-#   description = "Cluster configuration endpoint"
-# }
+
+
 
 # output "hostname" {
 #   value       = module.dns.hostname
