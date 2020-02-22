@@ -20,6 +20,7 @@ module "rds_cluster_aurora_mysql" {
   stage               = var.stage
   name                = var.name
   admin_user          = "sa"
+  admin_password      = "Test123456789"  
   db_name             = var.db_name
   instance_type       = var.instance_type
   snapshot_identifier = var.snapshot_identifier

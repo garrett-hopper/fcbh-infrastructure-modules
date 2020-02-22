@@ -70,9 +70,10 @@ resource "aws_elasticache_subnet_group" "dbp-cache" {
 resource "aws_security_group_rule" "allow_cache_access_from_beanstalk" {
   type              = "ingress"
   from_port         = var.elasticache_port
-  to_port           = elasticache_port
+  to_port           = var.elasticache_port
   protocol          = "tcp"
-  security_group_id = aws_security_group.default.id
+  source_security_group_id = data.aws_security_group.default.id  
+  security_group_id = data.aws_security_group.default.id
 }
 
 # module "acm_request_certificate" {

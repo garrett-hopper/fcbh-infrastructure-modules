@@ -85,6 +85,9 @@ output "elastic_beanstalk_environment_triggers" {
   value       = module.elastic_beanstalk_environment.triggers
 }
 
+output "elasticache_subnet_group_name" {
+  value       = aws_elasticache_subnet_group.dbp-cache.name
+}
 # output "cluster_id" {
 #   value       = module.memcached.cluster_id
 #   description = "Cluster ID"
