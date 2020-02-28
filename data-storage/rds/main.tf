@@ -4,10 +4,7 @@ provider "aws" {
 }
 
 terraform {
-  # The configuration for this backend will be filled in by Terragrunt
   backend "s3" {}
-
-  # The latest version of Terragrunt (v0.19.0 and above) requires Terraform 0.12.0 or above.
   required_version = ">= 0.12.0"
 }
 
@@ -29,7 +26,7 @@ module "rds_cluster_aurora_mysql" {
   subnets             = var.subnets
   zone_id             = var.zone_id
 
-  # cluster_parameters = [
+  cluster_parameters = [
   #   {
   #     name  = "character_set_client"
   #     value = "utf8"
@@ -68,5 +65,5 @@ module "rds_cluster_aurora_mysql" {
   #     value        = "1"
   #     apply_method = "pending-reboot"
   #   }
-  # ]
+  ]
 }

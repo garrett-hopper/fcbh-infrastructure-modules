@@ -18,8 +18,6 @@ data "aws_ami" "linux2" {
     name   = "name"
     values = ["amzn2-ami-hvm-2.0.20190313-x86_64-gp2"]
   }
-
-
   owners = ["137112412989"] # AWS
 }
 
@@ -33,7 +31,7 @@ module "security_group" {
     Name = var.security_group_name
   }
 
-  ingress_cidr_blocks = var.control_cidr #["0.0.0.0/0"] #[var.control_cidr]
+  ingress_cidr_blocks = var.control_cidr 
   ingress_rules       = ["ssh-tcp"]
 
   egress_cidr_blocks = ["0.0.0.0/0"]
@@ -43,7 +41,6 @@ module "security_group" {
 locals {
   user_data = <<EOF
 #!/bin/bash
-echo 'Woot!' > /home/ec2-user/user-script-output.txt
 yum update -y
 yum install mysql -y
 EOF
@@ -61,7 +58,3 @@ module "host" {
   user_data                   = local.user_data
   associate_public_ip_address = true
 }
-
-# TODO
-# get a linux2 instance that doesn't need a yum update
-

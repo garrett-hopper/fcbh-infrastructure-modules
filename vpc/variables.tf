@@ -1,3 +1,15 @@
+
+# specify a different AWS profile to provide different access keys
+variable "aws_profile" {
+  type    = string
+}
+
+# This module can be applied in multiple regions
+variable "aws_region" {
+}
+# delete above if not needed
+#############################
+
 variable "namespace" {
   description = "Namespace (e.g. `fcbh` )"
   type        = string
@@ -15,23 +27,7 @@ variable "name" {
   type        = string
 }
 
-# specify a different AWS profile to provide different access keys
-variable "aws_profile" {
-  type    = string
-}
 
-# This module can be applied in multiple regions
-variable "aws_region" {
-}
-
-#needed for named subnets
-# variable "availability_zone" {
-#   type = string
-# }
 variable "cidr_block" {
   type    = string
 }
-
-# variable "vpc_cidr_block" {
-#   type    = string
-# }
