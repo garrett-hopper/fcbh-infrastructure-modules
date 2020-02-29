@@ -1,4 +1,5 @@
 provider "aws" {
+  version = "= 2.49.0"
   region  = var.aws_region
   profile = var.aws_profile
 }
@@ -8,7 +9,8 @@ terraform {
   backend "s3" {}
 
   # The latest version of Terragrunt (v0.19.0 and above) requires Terraform 0.12.0 or above.
-  required_version = ">= 0.12.0"
+  #required_version = ">= 0.12.0"
+    required_version = "= 0.12.20"
 }
 
 data "aws_ami" "linux2" {
@@ -31,7 +33,7 @@ module "security_group" {
     Name = var.security_group_name
   }
 
-  ingress_cidr_blocks = var.control_cidr 
+  ingress_cidr_blocks = var.control_cidr
   ingress_rules       = ["ssh-tcp"]
 
   egress_cidr_blocks = ["0.0.0.0/0"]
