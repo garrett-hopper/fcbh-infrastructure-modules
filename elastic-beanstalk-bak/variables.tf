@@ -6,7 +6,6 @@ variable "aws_region" {
 
 variable "aws_profile" {
   type    = string
-  default = "dbp-admin"
 }
 
 # administrative, to match cloudposse label

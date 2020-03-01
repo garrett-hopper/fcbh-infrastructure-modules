@@ -20,7 +20,7 @@ module "memcached" {
   name                         = "cache"
   availability_zones           = data.aws_availability_zones.all.names
   vpc_id                       = var.vpc_id
-  allowed_security_groups      = [module.elastic_beanstalk_environment.security_group_id]
+  allowed_security_groups      = var.allowed_security_groups
   subnets                      = var.private_subnets
   cluster_size                 = var.cluster_size
   instance_type                = var.memcached_instance_type
@@ -28,13 +28,3 @@ module "memcached" {
   apply_immediately            = true
   zone_id                      = var.zone_id
 }
-
-# module "acm_request_certificate" {
-#   source                    = "git::https://github.com/cloudposse/terraform-aws-acm-request-certificate.git?ref=master"
-#   domain_name               = var.domain_name
-#   subject_alternative_names = var.subject_alternative_names
-#   tags                      = var.tags
-# }
-
-
-#https://us-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/faithcomesbyhearing-dbp-infrastructure/browse?region=us-west-2

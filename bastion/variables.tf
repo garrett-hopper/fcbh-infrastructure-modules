@@ -1,9 +1,9 @@
-# variable "aws_region" {
-# }
+variable "aws_region" {
+}
 
-# variable "aws_profile" {
-#   type    = string
-# }
+variable "aws_profile" {
+  type    = string
+}
 ###################################
 
 variable "host_name" {
@@ -12,18 +12,20 @@ variable "host_name" {
 variable "instance_type" {
   default = "t3.small"
 }
+variable "vpc_id" {
+}
 variable "subnet_id" {
 }
 variable "key_name" {
 }
 
-# variable "security_group_name" {
-#   default = "Bastion Security Group"
-# }
+variable "security_group_name" {
+  default = "Bastion Security Group"
+}
 
-# variable "control_cidr" {
-#   type = list(string)
-# }
+variable "control_cidr" {
+  type = list(string)
+}
 
 
 

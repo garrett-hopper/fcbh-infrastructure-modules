@@ -8,9 +8,9 @@ terraform {
   required_version = ">= 0.12.0"
 }
 
-data "aws_availability_zones" "all" {
-  state = "available"
-}
+# data "aws_availability_zones" "all" {
+#   state = "available"
+# }
 
 module "elastic_beanstalk_application" {
   source      = "git::https://github.com/cloudposse/terraform-aws-elastic-beanstalk-application.git?ref=tags/0.4.0"

@@ -1,13 +1,11 @@
-# AWS 
-# variable "aws_region" {
-#   type        = string
-#   description = "AWS region"
-# }
+variable "aws_region" {
+  type        = string
+  description = "AWS region"
+}
 
-# variable "aws_profile" {
-#   type    = string
-#   default = "dbp-admin"
-# }
+variable "aws_profile" {
+  type    = string
+}
 
 # administrative, to match cloudposse label
 variable "namespace" {
@@ -25,7 +23,19 @@ variable "name" {
   type        = string
 }
 
-
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID into which to launch the beanstalk environment"
+}
+variable "private_subnets" {
+  type        = list(string)
+  description = "A list of private subnet ids"
+}
+variable "allowed_security_groups" {
+  type        = list(string)
+  description = "List of security groups to add to the EC2 instances"
+  default     = []
+}
 
 variable "elasticache_port" {
   type        = number
@@ -33,10 +43,10 @@ variable "elasticache_port" {
   description = "Memcached port"
 }
 
-variable "availability_zones" {
-  type        = list(string)
-  description = "List of Availability Zones for the cluster"
-}
+# variable "availability_zones" {
+#   type        = list(string)
+#   description = "List of Availability Zones for the cluster"
+# }
 variable "cluster_size" {
   type        = number
   default     = 1

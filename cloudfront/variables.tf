@@ -1,3 +1,12 @@
+variable "aws_region" {
+  default = "us-east-2-foo"
+}
+
+# specify a different AWS profile to provide different access keys
+variable "aws_profile" {
+  type    = string
+}
+
 variable "namespace" {
   description = "Namespace (e.g. `fcbh` )"
   type        = string
@@ -15,16 +24,7 @@ variable "name" {
   type        = string
 }
 
-# This module can be applied in multiple regions
-variable "aws_region" {
-  default = "us-east-2"
-}
 
-# specify a different AWS profile to provide different access keys
-variable "aws_profile" {
-  type    = string
-  default = "bibleis-admin"
-}
 
 variable "parent_zone_id" {
   type        = string

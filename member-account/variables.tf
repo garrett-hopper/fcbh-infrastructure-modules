@@ -1,3 +1,12 @@
+# This module can be applied in multiple regions
+variable "aws_region" {
+  default = "us-east-2-foo"
+}
+
+variable "aws_profile" {
+  type    = string
+}
+
 # Boilerplate to ensure uniformity
 variable "namespace" {
   description = "Namespace (e.g. `fcbh` )"
@@ -17,16 +26,7 @@ variable "name" {
   default     = ""
 }
 
-# This module can be applied in multiple regions
-variable "aws_region" {
-  default = "us-east-2"
-}
 
-# specify a different AWS profile to provide different access keys
-variable "aws_profile" {
-  type    = string
-  default = "default"
-}
 
 # can be either a organizational_unit_id or an organization_id
 variable "parent_id" {
