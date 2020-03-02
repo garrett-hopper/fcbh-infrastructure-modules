@@ -1,3 +1,12 @@
+# AWS 
+variable "aws_region" {
+  type        = string
+  description = "AWS region"
+}
+
+variable "aws_profile" {
+  type    = string
+}
 # administrative, to match cloudposse label
 variable "namespace" {
   description = "Namespace, which could be your organization name, e.g. 'eg' or 'cp'"
@@ -24,6 +33,11 @@ variable "elastic_beanstalk_environment_name" {
   type        = string
   default     = ""
   description = "Elastic Beanstalk environment name. If not provided or set to empty string, the ``Deploy`` stage of the pipeline will not be created"
+}
+variable "github_oauth_token" {
+  type        = string
+  default     = ""  
+  description = "GitHub Oauth Token"
 }
 variable "repo_owner" {
   type        = string

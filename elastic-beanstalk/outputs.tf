@@ -84,25 +84,13 @@ output "elastic_beanstalk_environment_triggers" {
   description = "Autoscaling triggers in use by this environment"
   value       = module.elastic_beanstalk_environment.triggers
 }
-output "cluster_configuration_endpoint" {
-  value       = module.memcached.cluster_configuration_endpoint
-  description = "Cluster configuration endpoint"
-}
-output "cluster_address" {
-  value       = module.memcached.cluster_address
-  description = "Cluster address"
-}
-# output "elasticache_subnet_group_name" {
-#   value       = aws_elasticache_subnet_group.dbp-cache.name
+
+
+
+# output "security_group_id" {
+#   value       = join("", aws_security_group.default.*.id)
+#   description = "Security Group ID"
 # }
-# output "cluster_id" {
-#   value       = module.memcached.cluster_id
-#   description = "Cluster ID"
-# }
-output "security_group_id" {
-  value       = join("", aws_security_group.default.*.id)
-  description = "Security Group ID"
-}
 
 
 

@@ -1,9 +1,9 @@
-# variable "aws_region" {
-# }
+variable "aws_region" {
+}
 
-# variable "aws_profile" {
-#   type = string
-# }
+variable "aws_profile" {
+  type = string
+}
 
 variable "namespace" {
   description = "Namespace (e.g. `fcbh` )"

@@ -75,9 +75,8 @@ variable "dns_zone_id" {
   description = "Route53 parent zone ID. The module will create sub-domain DNS record in the parent zone for the EB environment"
 }
 variable "enable_stream_logs" {
-  #Cloudposse default: false
   type        = bool
-  default     = true
+  default     = false
   description = "Whether to create groups in CloudWatch Logs for proxy and deployment logs, and stream logs from each instance in your environment"
 }
 variable "env_vars" {
