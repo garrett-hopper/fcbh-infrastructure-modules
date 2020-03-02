@@ -1,12 +1,12 @@
 # This module can be applied in multiple regions
-# variable "aws_region" {
-#   default = "us-east-2-foo"
-# }
+variable "aws_region" {
+  default = "us-east-2-foo"
+}
 
-# # specify a different AWS profile to provide different access keys
-# variable "aws_profile" {
-#   type = string
-# }
+# specify a different AWS profile to provide different access keys
+variable "aws_profile" {
+  type = string
+}
 
 variable "domain_name" {
   type        = string
