@@ -37,7 +37,7 @@ variable "elastic_beanstalk_environment_name" {
 variable "github_oauth_token" {
   type        = string
   default     = ""  
-  description = "GitHub Oauth Token"
+  description = "(Optional) Environment Variable containing GitHub Oauth Token for access to private repo"
 }
 variable "repo_owner" {
   type        = string
@@ -58,4 +58,38 @@ variable "buildspec" {
   type        = string
   default     = ""
   description = " Declaration to use for building the project. [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html)"
+}
+
+
+###
+variable "enabled" {
+  type        = bool
+  default     = true
+  description = "A boolean to enable/disable resource creation"
+}
+variable "tags" {
+  type        = map(string)
+  default     = {}
+  description = "Additional tags (e.g. `map('BusinessUnit', 'XYZ')`"
+}
+variable "delimiter" {
+  type        = string
+  default     = "-"
+  description = "Delimiter to be used between `name`, `namespace`, `stage`, etc."
+}
+
+variable "attributes" {
+  type        = list(string)
+  default     = []
+  description = "Additional attributes (e.g. `policy` or `role`)"
+}
+variable "force_destroy" {
+  type        = bool
+  default     = false
+  description = "Force destroy the CI/CD S3 bucket even if it's not empty"
+}
+variable "poll_source_changes" {
+  type        = bool
+  default     = true
+  description = "Periodically check the location of your source content and run the pipeline if changes are detected"
 }
