@@ -73,6 +73,7 @@ variable "environment_description" {
 variable "dns_zone_id" {
   type        = string
   description = "Route53 parent zone ID. The module will create sub-domain DNS record in the parent zone for the EB environment"
+  default = ""
 }
 variable "enable_stream_logs" {
   type        = bool
