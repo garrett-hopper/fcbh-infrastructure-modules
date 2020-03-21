@@ -59,3 +59,34 @@ variable "cors_allowed_origins" {
   default     = []
   description = "List of allowed origins (e.g. example.com, test.com) for S3 bucket"
 }
+variable "ordered_cache" {
+  type = list(object({
+    path_pattern = string
+
+    allowed_methods = list(string)
+    cached_methods  = list(string)
+    compress        = bool
+
+    viewer_protocol_policy = string
+    min_ttl                = number
+    default_ttl            = number
+    max_ttl                = number
+
+    forward_query_string  = bool
+    forward_header_values = list(string)
+    forward_cookies       = string
+
+    lambda_function_association = list(object({
+      event_type   = string
+      include_body = bool
+      lambda_arn   = string
+    }))
+  }))
+  default     = []
+  description = <<DESCRIPTION
+An ordered list of cache behaviors resource for this distribution. List from top to bottom in order of precedence. The topmost cache behavior will have precedence 0.
+The fields can be described by the other variables in this file. For example, the field 'lambda_function_association' in this object has
+a description in var.lambda_function_association variable earlier in this file. The only difference is that fields on this object are in ordered caches, whereas the rest
+of the vars in this file apply only to the default cache.
+DESCRIPTION
+}

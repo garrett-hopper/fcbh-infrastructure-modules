@@ -12,7 +12,7 @@ terraform {
 }
 
 module "cloudfront_s3_cdn" {
-  source    = "git::https://github.com/cloudposse/terraform-aws-cloudfront-s3-cdn.git?ref=master"
+  source    = "git::https://github.com/cloudposse/terraform-aws-cloudfront-s3-cdn.git?ref=tags/0.23.1"
   namespace = var.namespace
   stage     = var.stage
   name      = var.name
@@ -48,6 +48,8 @@ resource "aws_s3_bucket_object" "index" {
 resource "aws_s3_bucket_public_access_block" "cloudfront-origin" {
   bucket = module.cloudfront_s3_cdn.s3_bucket
 
-  block_public_acls   = true
-  block_public_policy = true
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
