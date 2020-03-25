@@ -49,3 +49,15 @@ module "elastic_beanstalk_environment" {
   solution_stack_name                = var.solution_stack_name
   keypair                            = var.keypair
 }
+
+resource "aws_route53_record" "alias" {
+  zone_id = var.dns_zone_id
+  name    = var.dns_alias
+  type    = "A"
+
+  alias {
+    name                   = "beanstalk.dev.dbt.io"
+    zone_id                = var.dns_alias
+    evaluate_target_health = true
+  }
+}

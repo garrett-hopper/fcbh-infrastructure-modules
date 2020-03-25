@@ -75,6 +75,12 @@ variable "dns_zone_id" {
   description = "Route53 parent zone ID. The module will create sub-domain DNS record in the parent zone for the EB environment"
   default = ""
 }
+variable "dns_alias" {
+  type        = string
+  description = "A DNS A Alias record that points at the application CNAME.  dns_subdomain didn't work because our desired alias is the same as the zone name."
+  default = ""
+}
+
 variable "enable_stream_logs" {
   type        = bool
   default     = false
