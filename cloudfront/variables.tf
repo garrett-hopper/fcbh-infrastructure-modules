@@ -1,5 +1,4 @@
 variable "aws_region" {
-  default = "us-east-2-foo"
 }
 
 # specify a different AWS profile to provide different access keys
@@ -24,14 +23,23 @@ variable "name" {
   type        = string
 }
 
-
-
-variable "parent_zone_id" {
-  type        = string
-  default     = ""
-  description = "ID of the hosted zone to contain this record  (or specify `parent_zone_name`)"
+variable "ipv6_enabled" {
+  type        = bool
+  default     = false
+  description = "Set to true to enable an AAAA DNS record to be set as well as the A record"
 }
 
+
+# variable "parent_zone_id" {
+#   type        = string
+#   default     = ""
+#   description = "ID of the hosted zone to contain this record  (or specify `parent_zone_name`)"
+# }
+variable "parent_zone_name" {
+  type        = string
+  default     = ""
+  description = "Name of the hosted zone to contain this record (or specify `parent_zone_id`)"
+}
 variable "aliases" {
   type        = list(string)
   description = "List of FQDN's - Used to set the Alternate Domain Names (CNAMEs) setting on Cloudfront"
@@ -43,7 +51,16 @@ variable "log_prefix" {
   default     = ""
   description = "Path of logs in S3 bucket"
 }
-
+variable "price_class" {
+  type        = string
+  default     = "PriceClass_100"
+  description = "Price class for this distribution: `PriceClass_All`, `PriceClass_200`, `PriceClass_100`"
+}
+variable "default_ttl" {
+  type        = number
+  default     = 86400
+  description = "Default amount of time (in seconds) that an object is in a CloudFront cache"
+}
 variable "acm_certificate_arn" {
   type        = string
   description = "Existing ACM Certificate ARN"
@@ -59,34 +76,9 @@ variable "cors_allowed_origins" {
   default     = []
   description = "List of allowed origins (e.g. example.com, test.com) for S3 bucket"
 }
-variable "ordered_cache" {
-  type = list(object({
-    path_pattern = string
 
-    allowed_methods = list(string)
-    cached_methods  = list(string)
-    compress        = bool
-
-    viewer_protocol_policy = string
-    min_ttl                = number
-    default_ttl            = number
-    max_ttl                = number
-
-    forward_query_string  = bool
-    forward_header_values = list(string)
-    forward_cookies       = string
-
-    lambda_function_association = list(object({
-      event_type   = string
-      include_body = bool
-      lambda_arn   = string
-    }))
-  }))
-  default     = []
-  description = <<DESCRIPTION
-An ordered list of cache behaviors resource for this distribution. List from top to bottom in order of precedence. The topmost cache behavior will have precedence 0.
-The fields can be described by the other variables in this file. For example, the field 'lambda_function_association' in this object has
-a description in var.lambda_function_association variable earlier in this file. The only difference is that fields on this object are in ordered caches, whereas the rest
-of the vars in this file apply only to the default cache.
-DESCRIPTION
+variable "origin_force_destroy" {
+  type        = bool
+  default     = false
+  description = "Delete all objects from the bucket so that the bucket can be destroyed without error (e.g. `true` or `false`)"
 }

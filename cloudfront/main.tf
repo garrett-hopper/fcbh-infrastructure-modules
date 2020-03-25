@@ -18,6 +18,7 @@ module "cloudfront_s3_cdn" {
   name      = var.name
 
   acm_certificate_arn      = var.acm_certificate_arn
+  parent_zone_name         = var.parent_zone_name
   aliases                  = var.aliases
   allowed_methods          = ["GET", "HEAD", "OPTIONS"]
   cached_methods           = ["GET", "HEAD", "OPTIONS"]
@@ -26,14 +27,13 @@ module "cloudfront_s3_cdn" {
   cors_allowed_methods     = ["GET"]
   cors_allowed_origins     = var.cors_allowed_origins
   cors_expose_headers      = ["ETag"]
-  default_ttl              = 86400
-  parent_zone_id           = var.parent_zone_id
+  default_ttl              = var.default_ttl
+  ipv6_enabled             = var.ipv6_enabled
   log_prefix               = var.log_prefix
   minimum_protocol_version = var.minimum_protocol_version
-  origin_force_destroy     = false
-  price_class              = "PriceClass_All"
+  origin_force_destroy     = var.origin_force_destroy
+  price_class              = var.price_class
   trusted_signers          = ["self"]
-  use_regional_s3_endpoint = true
   viewer_protocol_policy   = "allow-all"
 }
 

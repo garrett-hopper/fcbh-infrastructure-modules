@@ -1,6 +1,5 @@
 # This module can be applied in multiple regions
 variable "aws_region" {
-  default = "us-east-2-foo"
 }
 
 # specify a different AWS profile to provide different access keys
@@ -16,6 +15,11 @@ variable "subject_alternative_names" {
   type        = list(string)
   default     = []
   description = "A list of domains that should be SANs in the issued certificate"
+}
+variable "validation_method" {
+  type        = string
+  default     = "DNS"
+  description = "Method to use for validation, DNS or EMAIL"
 }
 variable "tags" {
   type        = map(string)

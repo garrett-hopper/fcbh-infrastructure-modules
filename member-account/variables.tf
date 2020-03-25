@@ -1,6 +1,5 @@
 # This module can be applied in multiple regions
 variable "aws_region" {
-  default = "us-east-2-foo"
 }
 
 variable "aws_profile" {
