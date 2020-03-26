@@ -97,13 +97,3 @@ output "elastic_beanstalk_environment_triggers" {
 output "zone_id" {
   value = var.dns_zone_id
 }
-
-output "hostname" {
-  value       = module.dns.hostname
-  description = "Cluster hostname"
-}
-
-output "cluster_urls" {
-  value       = null_resource.cluster_urls.*.triggers.name
-  description = "Cluster URLs"
-}
