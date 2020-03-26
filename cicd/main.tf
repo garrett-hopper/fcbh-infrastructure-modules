@@ -2,7 +2,7 @@ provider "aws" {
   region  = var.aws_region
   profile = var.aws_profile
   # Live modules pin exact provider version; generic modules let consumers pin the version.
-  version = "= 2.51.0"  
+  #version = "= 2.51.0"  
 }
 
 terraform {
