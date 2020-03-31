@@ -50,8 +50,14 @@ module "elastic_beanstalk_environment" {
   keypair                            = var.keypair
 }
 
-resource "aws_sns_topic" "beanstalk_health" {
-  name = "beanstalk-health"
+module "sns" {
+  source    = "../sns"
+  aws_region    = var.aws_region
+  aws_profile   = var.aws_profile
+  namespace = var.namespace
+  stage     = var.stage
+  name      = var.name
+  topic     = "beanstalk-environment-health"
 }
 
 
@@ -65,7 +71,7 @@ resource "aws_cloudwatch_metric_alarm" "beanstalk-health" {
   period                    = "300"
   statistic                 = "Maximum"
   alarm_description         = "This metric monitors Beanstalk environment health"
-  alarm_actions             = [aws_sns_topic.beanstalk_health.arn]
+  alarm_actions             = [module.sns.arn]
   insufficient_data_actions = []
 
   dimensions = {
