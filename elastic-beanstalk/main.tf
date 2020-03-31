@@ -49,3 +49,26 @@ module "elastic_beanstalk_environment" {
   solution_stack_name                = var.solution_stack_name
   keypair                            = var.keypair
 }
+
+resource "aws_sns_topic" "beanstalk_health" {
+  name = "beanstalk-health"
+}
+
+
+resource "aws_cloudwatch_metric_alarm" "beanstalk-health" {
+  alarm_name                = "Beanstalk-health"
+  metric_name               = "EnvironmentHealth"
+  namespace                 = "AWS/Beanstalk"
+  comparison_operator       = "GreaterThanThreshold"
+  threshold                 = "0"
+  evaluation_periods        = "2"
+  period                    = "300"
+  statistic                 = "Maximum"
+  alarm_description         = "This metric monitors Beanstalk environment health"
+  alarm_actions             = [aws_sns_topic.beanstalk_health.arn]
+  insufficient_data_actions = []
+
+  dimensions = {
+    EnvironmentName = module.elastic_beanstalk_environment.name
+  }
+}
