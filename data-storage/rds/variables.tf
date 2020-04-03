@@ -54,3 +54,31 @@ variable "zone_id" {
   type        = string
   default     = ""
 }
+variable "autoscaling_enabled" {
+  type        = bool
+  default     = false
+  description = "Whether to enable cluster autoscaling"
+}
+
+variable "autoscaling_policy_type" {
+  type        = string
+  default     = "TargetTrackingScaling"
+  description = "Autoscaling policy type. `TargetTrackingScaling` and `StepScaling` are supported"
+}
+
+variable "autoscaling_target_metrics" {
+  type        = string
+  default     = "RDSReaderAverageCPUUtilization"
+  description = "The metrics type to use. If this value isn't provided the default is CPU utilization. RDSReaderAverageDatabaseConnections"
+}
+
+variable "autoscaling_target_value" {
+  type        = number
+  default     = 75
+  description = "The target value to scale with respect to target metrics"
+}
+variable "autoscaling_min_capacity" {
+  type        = number
+  default     = 1
+  description = "Minimum number of instances to be maintained by the autoscaler"
+}
