@@ -136,3 +136,8 @@ variable "keypair" {
   description = "Name of SSH key that will be deployed on Elastic Beanstalk and DataPipeline instance. The key should be present in AWS"
   default     = ""
 }
+variable "force_destroy" {
+  type        = bool
+  default     = false
+  description = "Force destroy the S3 bucket for load balancer logs"
+}
