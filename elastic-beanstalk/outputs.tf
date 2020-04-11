@@ -85,15 +85,16 @@ output "elastic_beanstalk_environment_triggers" {
   value       = module.elastic_beanstalk_environment.triggers
 }
 
-
-
-# output "security_group_id" {
-#   value       = join("", aws_security_group.default.*.id)
-#   description = "Security Group ID"
-# }
-
-
-
 output "zone_id" {
   value = var.dns_zone_id
+}
+
+output "beanstalk_health_alarm_sns_arn" {
+  description = "SNS ARN to which beanstalk health alarms will be sent"
+  value = module.sns.arn
+}
+
+output "beanstalk_health_alarm_sns_topic" {
+  description = "SNS topic to which beanstalk health alarms will be sent"
+  value = module.sns.topic_name
 }

@@ -63,15 +63,15 @@ module "sns" {
 
 
 resource "aws_cloudwatch_metric_alarm" "beanstalk-health" {
-  alarm_name                = "Beanstalk-health"
-  metric_name               = "EnvironmentHealth"
-  namespace                 = "AWS/Beanstalk"
-  comparison_operator       = "GreaterThanThreshold"
-  threshold                 = "0"
-  evaluation_periods        = "2"
-  period                    = "300"
-  statistic                 = "Maximum"
-  alarm_description         = "This metric monitors Beanstalk environment health"
+  alarm_name          = join("-", ["beanstalk-health", module.elastic_beanstalk_environment.name])
+  metric_name         = "EnvironmentHealth"
+  namespace           = "AWS/Beanstalk"
+  comparison_operator = "GreaterThanThreshold"
+  threshold           = "0"
+  evaluation_periods  = "2"
+  period              = "300"
+  statistic           = "Maximum"
+  alarm_description   = "This metric alarms on bad Beanstalk environment health"
   alarm_actions             = [module.sns.arn]
   insufficient_data_actions = []
 

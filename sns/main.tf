@@ -8,6 +8,10 @@ terraform {
   required_version = ">= 0.12.0"
 }
 
+locals {
+   topic_name = join("", [var.topic, "-", module.label.id])
+}
+
 module "label" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.15.0"
   namespace  = var.namespace
@@ -19,6 +23,6 @@ module "label" {
 }
 
 resource "aws_sns_topic" "default" {
-  name = join("", [var.topic, "-", module.label.id])
+  name = local.topic_name
   tags = module.label.tags
 }
