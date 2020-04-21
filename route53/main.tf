@@ -16,7 +16,7 @@ terraform {
 # permission to update the parent zone, which is not the use case we are developing. Instead, the subdomain zone will be created stand-alone, and 
 # the validation records will be manually entered into the parent zone
 module "label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.13.0"
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.15.0"
   namespace  = var.namespace
   stage      = var.stage
   name       = var.name
