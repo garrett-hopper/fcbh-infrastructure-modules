@@ -1,14 +1,14 @@
 terraform {
-# Live modules pin exact Terraform version; generic modules let consumers pin the version.
-# The latest version of Terragrunt (v0.19.0 and above) requires Terraform 0.12.0 or above.
-   required_version = "= 0.12.24"
+  # Live modules pin exact Terraform version; generic modules let consumers pin the version.
+  # The latest version of Terragrunt (v0.19.0 and above) requires Terraform 0.12.0 or above.
+  required_version = "= 0.12.24"
 
-# Live modules pin exact provider version; generic modules let consumers pin the version.
-   required_providers {
-      aws = {
-         version = "= 2.58.0"
-      }
+  # Live modules pin exact provider version; generic modules let consumers pin the version.
+  required_providers {
+    aws = {
+      version = "= 2.58.0"
     }
+  }
 }
 
 module "cloudfront_s3_cdn" {
@@ -32,6 +32,7 @@ module "cloudfront_s3_cdn" {
   log_prefix               = var.log_prefix
   minimum_protocol_version = var.minimum_protocol_version
   origin_force_destroy     = var.origin_force_destroy
+  origin_bucket            = var.origin_bucket
   price_class              = var.price_class
   trusted_signers          = ["self"]
   viewer_protocol_policy   = "allow-all"

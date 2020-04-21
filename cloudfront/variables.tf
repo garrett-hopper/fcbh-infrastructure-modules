@@ -82,3 +82,8 @@ variable "origin_force_destroy" {
   default     = false
   description = "Delete all objects from the bucket so that the bucket can be destroyed without error (e.g. `true` or `false`)"
 }
+variable "origin_bucket" {
+  type        = string
+  default     = ""
+  description = "Origin S3 bucket name"
+}
