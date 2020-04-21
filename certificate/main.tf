@@ -13,7 +13,7 @@ terraform {
 
 
 module "acm_request_certificate" {
-  source                    = "git::https://github.com/cloudposse/terraform-aws-acm-request-certificate.git?ref=master"
+  source                    = "git::https://github.com/cloudposse/terraform-aws-acm-request-certificate.git?ref=master" # tags/0.1.4 is no good
   domain_name               = var.domain_name
   subject_alternative_names = var.subject_alternative_names
   validation_method         = var.validation_method
