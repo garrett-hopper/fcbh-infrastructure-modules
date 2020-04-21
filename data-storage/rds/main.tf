@@ -34,7 +34,18 @@ module "rds_cluster_aurora_mysql" {
   autoscaling_target_metrics = var.autoscaling_target_metrics
   autoscaling_target_value   = var.autoscaling_target_value
 
+
+      # - parameter {
+      #     - apply_method = "pending-reboot" -> null
+      #     - name         = "binlog_format" -> null
+      #     - value        = "row" -> null
+      #   }
   cluster_parameters = [
+      {
+        name  = "binlog_format"
+        value = "row"
+        apply_method = "pending-reboot"
+      }
     #   {
     #     name  = "character_set_client"
     #     value = "utf8"
