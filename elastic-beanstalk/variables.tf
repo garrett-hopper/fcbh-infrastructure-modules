@@ -86,7 +86,7 @@ variable "autoscale_max" {
   default     = 3
   description = "Maximum instances to launch"
 }
-ß
+
 variable "enable_stream_logs" {
   type        = bool
   default     = false
