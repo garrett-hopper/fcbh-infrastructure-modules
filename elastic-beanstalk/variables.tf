@@ -75,6 +75,18 @@ variable "dns_zone_id" {
   description = "Route53 parent zone ID. The module will create sub-domain DNS record in the parent zone for the EB environment"
   default = ""
 }
+variable "autoscale_min" {
+  type        = number
+  default     = 2
+  description = "Minumum instances to launch"
+}
+
+variable "autoscale_max" {
+  type        = number
+  default     = 3
+  description = "Maximum instances to launch"
+}
+ß
 variable "enable_stream_logs" {
   type        = bool
   default     = false

@@ -1,14 +1,14 @@
 terraform {
-# Live modules pin exact Terraform version; generic modules let consumers pin the version.
-# The latest version of Terragrunt (v0.19.0 and above) requires Terraform 0.12.0 or above.
-   required_version = "= 0.12.24"
+  # Live modules pin exact Terraform version; generic modules let consumers pin the version.
+  # The latest version of Terragrunt (v0.19.0 and above) requires Terraform 0.12.0 or above.
+  required_version = "= 0.12.24"
 
-# Live modules pin exact provider version; generic modules let consumers pin the version.
-   required_providers {
-      aws = {
-         version = "= 2.58.0"
-      }
+  # Live modules pin exact provider version; generic modules let consumers pin the version.
+  required_providers {
+    aws = {
+      version = "= 2.58.0"
     }
+  }
 }
 
 module "elastic_beanstalk_application" {
@@ -47,6 +47,8 @@ module "elastic_beanstalk_environment" {
   loadbalancer_certificate_arn       = var.loadbalancer_certificate_arn
   loadbalancer_ssl_policy            = "ELBSecurityPolicy-2016-08"
   loadbalancer_type                  = var.loadbalancer_type
+  autoscale_min                      = var.autoscale_min
+  autoscale_max                      = var.autoscale_max
   logs_retention_in_days             = var.logs_retention_in_days
   rolling_update_type                = var.rolling_update_type
   solution_stack_name                = var.solution_stack_name
@@ -66,15 +68,15 @@ module "sns" {
 
 
 resource "aws_cloudwatch_metric_alarm" "beanstalk-health" {
-  alarm_name          = join("-", ["beanstalk-health", module.elastic_beanstalk_environment.name])
-  metric_name         = "EnvironmentHealth"
-  namespace           = "AWS/ElasticBeanstalk"
-  comparison_operator = "GreaterThanThreshold"
-  threshold           = "0"
-  evaluation_periods  = "1"
-  period              = "300"
-  statistic           = "Maximum"
-  alarm_description   = "This metric alarms on bad Beanstalk environment health"
+  alarm_name                = join("-", ["beanstalk-health", module.elastic_beanstalk_environment.name])
+  metric_name               = "EnvironmentHealth"
+  namespace                 = "AWS/ElasticBeanstalk"
+  comparison_operator       = "GreaterThanThreshold"
+  threshold                 = "0"
+  evaluation_periods        = "1"
+  period                    = "300"
+  statistic                 = "Maximum"
+  alarm_description         = "This metric alarms on bad Beanstalk environment health"
   alarm_actions             = [module.sns.arn]
   insufficient_data_actions = []
 
