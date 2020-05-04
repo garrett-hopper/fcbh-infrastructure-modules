@@ -31,24 +31,29 @@ variable "create_sns_topic" {
   default     = true
 }
 
-variable "slack_webhook_url" {
+variable "application_elb_id" {
   type        = string
-  description = "The URL of Slack webhook"
+  description = "The id of the Application load balancer"
 }
 
-variable "slack_channel" {
-  type        = string
-  description = "The name of the channel in Slack for notifications"
-}
+# variable "slack_webhook_url" {
+#   type        = string
+#   description = "The URL of Slack webhook"
+# }
 
-variable "slack_username" {
-  type        = string
-  description = "The username that will appear on Slack messages"
-  default     = "reporter"
-}
+# variable "slack_channel" {
+#   type        = string
+#   description = "The name of the channel in Slack for notifications"
+# }
 
-variable "sns_topic_name" {
-  type        = string
-  description = "Name of the SNS topic to subscribe to."
-  default     = ""
-}
+# variable "slack_username" {
+#   type        = string
+#   description = "The username that will appear on Slack messages"
+#   default     = "reporter"
+# }
+
+# variable "sns_topic_name" {
+#   type        = string
+#   description = "Name of the SNS topic to subscribe to."
+#   default     = ""
+# }
