@@ -31,6 +31,29 @@ variable "instance_type" {
   type        = string
   default     = "db.t3.micro"
 }
+variable "engine" {
+  type        = string
+  default     = "aurora"
+  description = "The name of the database engine to be used for this DB cluster. Valid values: `aurora`, `aurora-mysql`, `aurora-postgresql`"
+}
+variable "cluster_family" {
+  type        = string
+  default     = "aurora5.6"
+  description = "The family of the DB cluster parameter group"
+}
+variable "engine_mode" {
+  type        = string
+  default     = "provisioned"
+  description = "The database engine mode. Valid values: `parallelquery`, `provisioned`, `serverless`"
+}
+
+variable "engine_version" {
+  type        = string
+  default     = ""
+  description = "The version of the database engine to use. See `aws rds describe-db-engine-versions` "
+}
+
+
 variable "snapshot_identifier" {
   description = "Specifies whether or not to create this cluster from a snapshot. You can use either the name or ARN when specifying a DB cluster snapshot, or the ARN when specifying a DB snapshot."
   type        = string
@@ -56,7 +79,7 @@ variable "zone_id" {
 }
 variable "autoscaling_enabled" {
   type        = bool
-  default     = false
+  default     = true
   description = "Whether to enable cluster autoscaling"
 }
 
@@ -81,4 +104,16 @@ variable "autoscaling_min_capacity" {
   type        = number
   default     = 1
   description = "Minimum number of instances to be maintained by the autoscaler"
+}
+
+variable "performance_insights_enabled" {
+  type        = bool
+  default     = true
+  description = "Whether to enable Performance Insights"
+}
+
+variable "performance_insights_kms_key_id" {
+  type        = string
+  default     = ""
+  description = "The ARN for the KMS key to encrypt Performance Insights data. When specifying `performance_insights_kms_key_id`, `performance_insights_enabled` needs to be set to true"
 }
