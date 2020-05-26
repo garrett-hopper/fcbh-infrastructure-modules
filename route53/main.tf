@@ -1,12 +1,12 @@
 terraform {
 # Live modules pin exact Terraform version; generic modules let consumers pin the version.
 # The latest version of Terragrunt (v0.19.0 and above) requires Terraform 0.12.0 or above.
-   required_version = "= 0.12.24"
+   required_version = "= 0.12.25"
 
 # Live modules pin exact provider version; generic modules let consumers pin the version.
    required_providers {
       aws = {
-         version = "= 2.58.0"
+         version = "= 2.63.0"
       }
     }
 }
@@ -16,7 +16,7 @@ terraform {
 # permission to update the parent zone, which is not the use case we are developing. Instead, the subdomain zone will be created stand-alone, and 
 # the validation records will be manually entered into the parent zone
 module "label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.13.0"
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.16.0"
   namespace  = var.namespace
   stage      = var.stage
   name       = var.name

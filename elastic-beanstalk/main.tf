@@ -1,12 +1,12 @@
 terraform {
   # Live modules pin exact Terraform version; generic modules let consumers pin the version.
   # The latest version of Terragrunt (v0.19.0 and above) requires Terraform 0.12.0 or above.
-  required_version = "= 0.12.24"
+  required_version = "= 0.12.25"
 
   # Live modules pin exact provider version; generic modules let consumers pin the version.
   required_providers {
     aws = {
-      version = "= 2.58.0"
+      version = "= 2.63.0"
     }
   }
 }
@@ -49,6 +49,8 @@ module "elastic_beanstalk_environment" {
   loadbalancer_type                  = var.loadbalancer_type
   autoscale_min                      = var.autoscale_min
   autoscale_max                      = var.autoscale_max
+  autoscale_upper_bound              = var.autoscale_upper_bound
+  autoscale_lower_bound              = var.autoscale_lower_bound
   logs_retention_in_days             = var.logs_retention_in_days
   rolling_update_type                = var.rolling_update_type
   solution_stack_name                = var.solution_stack_name

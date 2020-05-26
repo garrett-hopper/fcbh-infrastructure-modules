@@ -153,3 +153,14 @@ variable "force_destroy" {
   default     = false
   description = "Force destroy the S3 bucket for load balancer logs"
 }
+variable "autoscale_lower_bound" {
+  type        = number
+  default     = 50
+  description = "Minimum level of autoscale metric to remove an instance"
+}
+
+variable "autoscale_upper_bound" {
+  type        = number
+  default     = 70
+  description = "Maximum level of autoscale metric to add an instance"
+}
