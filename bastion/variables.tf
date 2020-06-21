@@ -10,7 +10,7 @@ variable "host_name" {
   default = "Bastion Host"
 }
 variable "instance_type" {
-  default = "t3.small"
+  default = "t3.nano"
 }
 variable "vpc_id" {
 }

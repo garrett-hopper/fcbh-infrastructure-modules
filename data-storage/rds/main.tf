@@ -1,12 +1,12 @@
 terraform {
   # Live modules pin exact Terraform version; generic modules let consumers pin the version.
   # The latest version of Terragrunt (v0.19.0 and above) requires Terraform 0.12.0 or above.
-  required_version = "~> 0.12.25"
+  required_version = "~> 0.12"
 
   # Live modules pin exact provider version; generic modules let consumers pin the version.
   required_providers {
     aws = {
-      version = "~> 2.63.0"
+      version = "~> 2.67"
     }
   }
 }
@@ -14,7 +14,7 @@ terraform {
 # follow https://github.com/cloudposse/terraform-aws-rds-cluster/issues/63. when incorporated, change cluster size back to 1
 
 module "rds_cluster_aurora_mysql" {
-  source                       = "git::https://github.com/cloudposse/terraform-aws-rds-cluster.git?ref=tags/0.25.0"
+  source                       = "git::https://github.com/cloudposse/terraform-aws-rds-cluster.git?ref=tags/0.27.0"
   engine                       = var.engine
   engine_version               = var.engine_version
   cluster_family               = var.cluster_family

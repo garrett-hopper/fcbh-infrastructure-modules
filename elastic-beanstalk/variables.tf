@@ -164,3 +164,8 @@ variable "autoscale_upper_bound" {
   default     = 70
   description = "Maximum level of autoscale metric to add an instance"
 }
+variable "preferred_start_time" {
+  type        = string
+  default     = "Sun:18:00"
+  description = "Configure a maintenance window for managed actions in UTC. Default is Sunday 1800 UTC"
+}
