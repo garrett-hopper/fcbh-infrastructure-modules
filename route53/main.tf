@@ -6,7 +6,7 @@ terraform {
 # Live modules pin exact provider version; generic modules let consumers pin the version.
    required_providers {
       aws = {
-         version = "~> 2.67"
+         version = "~> 2.70"
       }
     }
 }
