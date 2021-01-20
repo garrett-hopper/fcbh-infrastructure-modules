@@ -46,6 +46,11 @@ variable "delimiter" {
   description = "Delimiter to be used between `namespace`, `stage`, `name` and `attributes`"
 }
 
+variable "parent_zone_record_enabled" {
+  type        = bool
+  default     = true
+  description = "Whether to create the NS record on the parent zone. Useful for creating a cluster zone across accounts. `var.parent_zone_name` required if set to false."
+}
 variable "attributes" {
   type        = list(string)
   default     = []
