@@ -31,11 +31,7 @@ output "upload_bucket" {
 }
 
 output "artifacts_bucket" {
-  value = aws_s3_bucket.s3_artifacts.id
-}
-
-output "dynamodb_table" {
-  value = aws_dynamodb_table.dynamodb.id
+  value = var.s3_artifacts_bucket
 }
 
 output "cloudfront_domain_name" {

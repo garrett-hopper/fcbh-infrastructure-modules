@@ -59,7 +59,7 @@ data "aws_iam_policy_document" "iam_task" {
     actions = ["s3:*Object"]
     resources = [
       "${aws_s3_bucket.s3_upload.arn}/*",
-      "${aws_s3_bucket.s3_artifacts.arn}/*"
+      "arn:aws:s3:::${var.s3_artifacts_bucket}/*"
     ]
   }
 }
@@ -141,16 +141,11 @@ data "aws_iam_policy_document" "iam_authenticated" {
 
   statement {
     actions   = ["s3:ListBucket"]
-    resources = [aws_s3_bucket.s3_artifacts.arn]
+    resources = ["arn:aws:s3:::${var.s3_artifacts_bucket}"]
   }
 
   statement {
-    actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.s3_artifacts.arn}/*"]
-  }
-
-  statement {
-    actions   = ["dynamodb:Scan", "dynamodb:GetItem", "dynamodb:PutItem"]
-    resources = [aws_dynamodb_table.dynamodb.arn]
+    actions   = ["s3:GetObject", "s3:PutObject"]
+    resources = ["arn:aws:s3:::${var.s3_artifacts_bucket}/*"]
   }
 }

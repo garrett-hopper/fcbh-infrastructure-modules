@@ -76,7 +76,7 @@ resource "aws_ecs_task_definition" "main" {
       },
       {
         name  = "S3_ARTIFACTS_BUCKET"
-        value = aws_s3_bucket.s3_artifacts.id
+        value = var.s3_artifacts_bucket
       },
     ]
   }])

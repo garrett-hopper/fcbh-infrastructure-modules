@@ -47,3 +47,8 @@ variable "s3_vid_bucket" {
   type    = string
   default = "dbp-vid"
 }
+
+variable "s3_artifacts_bucket" {
+  type    = string
+  default = "dbp-etl-artifacts"
+}
