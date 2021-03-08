@@ -10,6 +10,10 @@ resource "aws_iam_role" "iam_authenticated" {
   assume_role_policy = data.aws_iam_policy_document.iam_assume_authenticated.json
 }
 
+resource "aws_iam_role" "iam_lambda" {
+  assume_role_policy = data.aws_iam_policy_document.iam_assume_lambda.json
+}
+
 data "aws_iam_policy_document" "iam_assume_ecs" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -36,6 +40,16 @@ data "aws_iam_policy_document" "iam_assume_authenticated" {
       test     = "ForAnyValue:StringLike"
       variable = "cognito-identity.amazonaws.com:amr"
       values   = ["authenticated"]
+    }
+  }
+}
+
+data "aws_iam_policy_document" "iam_assume_lambda" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
     }
   }
 }
@@ -135,7 +149,12 @@ data "aws_iam_policy_document" "iam_authenticated" {
   }
 
   statement {
-    actions   = ["s3:PutObject", "s3:PutObjectAcl"]
+    actions   = ["s3:ListBucket"]
+    resources = [aws_s3_bucket.s3_upload.arn]
+  }
+
+  statement {
+    actions   = ["s3:GetObject", "s3:PutObject"]
     resources = ["${aws_s3_bucket.s3_upload.arn}/*"]
   }
 
@@ -147,5 +166,26 @@ data "aws_iam_policy_document" "iam_authenticated" {
   statement {
     actions   = ["s3:GetObject", "s3:PutObject"]
     resources = ["arn:aws:s3:::${var.s3_artifacts_bucket}/*"]
+  }
+
+  statement {
+    actions   = ["lambda:InvokeFunction"]
+    resources = [aws_lambda_function.lambda_validate.arn]
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "iam_lambda" {
+  role       = aws_iam_role.iam_lambda.name
+  policy_arn = aws_iam_policy.iam_lambda.arn
+}
+
+resource "aws_iam_policy" "iam_lambda" {
+  policy = data.aws_iam_policy_document.iam_lambda.json
+}
+
+data "aws_iam_policy_document" "iam_lambda" {
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.s3_upload.arn}/*"]
   }
 }

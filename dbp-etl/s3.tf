@@ -3,8 +3,16 @@ resource "aws_s3_bucket" "s3_upload" {
 
   cors_rule {
     allowed_headers = ["*"]
-    allowed_methods = ["PUT"]
+    allowed_methods = ["POST", "PUT", "GET"]
     allowed_origins = ["*"]
+    expose_headers = [
+      "Content-Length",
+      "Content-Type",
+      "Connection",
+      "Date",
+      "ETag",
+      "Server",
+    ]
   }
 }
 
