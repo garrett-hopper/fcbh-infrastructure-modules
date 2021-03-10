@@ -1,16 +1,20 @@
 resource "aws_iam_role" "iam_task" {
+  name               = "dbp-etl-${var.environment}-task"
   assume_role_policy = data.aws_iam_policy_document.iam_assume_ecs.json
 }
 
 resource "aws_iam_role" "iam_execution" {
+  name               = "dbp-etl-${var.environment}-execution"
   assume_role_policy = data.aws_iam_policy_document.iam_assume_ecs.json
 }
 
 resource "aws_iam_role" "iam_authenticated" {
+  name               = "dbp-etl-${var.environment}-authenticated"
   assume_role_policy = data.aws_iam_policy_document.iam_assume_authenticated.json
 }
 
 resource "aws_iam_role" "iam_lambda" {
+  name               = "dbp-etl-${var.environment}-lambda"
   assume_role_policy = data.aws_iam_policy_document.iam_assume_lambda.json
 }
 
@@ -60,6 +64,7 @@ resource "aws_iam_role_policy_attachment" "iam_task" {
 }
 
 resource "aws_iam_policy" "iam_task" {
+  name   = "dbp-etl-${var.environment}-task"
   policy = data.aws_iam_policy_document.iam_task.json
 }
 
@@ -84,6 +89,7 @@ resource "aws_iam_role_policy_attachment" "iam_execution" {
 }
 
 resource "aws_iam_policy" "iam_execution" {
+  name   = "dbp-etl-${var.environment}-execution"
   policy = data.aws_iam_policy_document.iam_execution.json
 }
 
@@ -119,6 +125,7 @@ resource "aws_iam_role_policy_attachment" "iam_authenticated" {
 }
 
 resource "aws_iam_policy" "iam_authenticated" {
+  name   = "dbp-etl-${var.environment}-authenticated"
   policy = data.aws_iam_policy_document.iam_authenticated.json
 }
 
@@ -180,6 +187,7 @@ resource "aws_iam_role_policy_attachment" "iam_lambda" {
 }
 
 resource "aws_iam_policy" "iam_lambda" {
+  name   = "dbp-etl-${var.environment}-lambda"
   policy = data.aws_iam_policy_document.iam_lambda.json
 }
 

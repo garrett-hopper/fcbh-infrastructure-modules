@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "s3_upload" {
-  bucket = "dbp-etl-upload-${random_string.random.result}"
+  bucket = "dbp-etl-upload-${var.environment}-${random_string.random.result}"
 
   cors_rule {
     allowed_headers = ["*"]
@@ -14,10 +14,6 @@ resource "aws_s3_bucket" "s3_upload" {
       "Server",
     ]
   }
-}
-
-resource "aws_s3_bucket" "s3_destination" {
-  bucket = "dbp-etl-destination-${random_string.random.result}"
 }
 
 resource "aws_s3_bucket_object" "s3_lpts" {

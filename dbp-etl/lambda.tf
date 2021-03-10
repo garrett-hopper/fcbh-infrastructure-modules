@@ -1,5 +1,5 @@
 resource "aws_lambda_function" "lambda_validate" {
-  function_name    = "validate-${random_string.random.result}"
+  function_name    = "dbp-etl-validate-${var.environment}-${random_string.random.result}"
   handler          = "Handler.handler"
   runtime          = "python3.8"
   role             = aws_iam_role.iam_lambda.arn
@@ -17,8 +17,4 @@ resource "aws_lambda_function" "lambda_validate" {
 
 resource "aws_cloudwatch_log_group" "lambda_validate" {
   name = "/aws/lambda/${aws_lambda_function.lambda_validate.function_name}"
-}
-
-output "validate_lambda" {
-  value = aws_lambda_function.lambda_validate.function_name
 }

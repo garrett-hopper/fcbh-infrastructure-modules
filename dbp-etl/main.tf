@@ -15,7 +15,7 @@ data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
 resource "aws_ecs_cluster" "main" {
-  name = "dbp"
+  name = "dbp-etl-${var.environment}-${random_string.random.result}"
 }
 
 resource "aws_ecs_task_definition" "main" {
@@ -83,10 +83,10 @@ resource "aws_ecs_task_definition" "main" {
 }
 
 resource "aws_ecr_repository" "main" {
-  name = "dbp-etl"
+  name = "dbp-etl-${var.environment}-${random_string.random.result}"
 }
 
 resource "aws_cloudwatch_log_group" "main" {
-  name              = "/ecs/dbp-etl"
+  name              = "/ecs/dbp-etl-${var.environment}-${random_string.random.result}"
   retention_in_days = 7
 }
