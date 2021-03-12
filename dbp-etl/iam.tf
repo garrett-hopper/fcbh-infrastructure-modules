@@ -63,6 +63,11 @@ resource "aws_iam_role_policy_attachment" "iam_task" {
   policy_arn = aws_iam_policy.iam_task.arn
 }
 
+resource "aws_iam_role_policy_attachment" "iam_task_elastic_transcoder" {
+  role       = aws_iam_role.iam_task.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonElasticTranscoder_JobsSubmitter"
+}
+
 resource "aws_iam_policy" "iam_task" {
   name   = "dbp-etl-${var.environment}-task"
   policy = data.aws_iam_policy_document.iam_task.json
@@ -70,15 +75,16 @@ resource "aws_iam_policy" "iam_task" {
 
 data "aws_iam_policy_document" "iam_task" {
   statement {
-    actions   = ["s3:ListBucket"]
-    resources = [aws_s3_bucket.s3_upload.arn]
-  }
-
-  statement {
-    actions = ["s3:*Object"]
+    actions = ["s3:*"]
     resources = [
+      aws_s3_bucket.s3_upload.arn,
       "${aws_s3_bucket.s3_upload.arn}/*",
-      "arn:aws:s3:::${var.s3_artifacts_bucket}/*"
+      "arn:aws:s3:::${var.s3_artifacts_bucket}",
+      "arn:aws:s3:::${var.s3_artifacts_bucket}/*",
+      "arn:aws:s3:::dbp-prod",
+      "arn:aws:s3:::dbp-prod/*",
+      "arn:aws:s3:::dbp-vid",
+      "arn:aws:s3:::dbp-vid/*",
     ]
   }
 }
