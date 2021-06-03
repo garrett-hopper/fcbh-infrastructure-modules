@@ -26,6 +26,13 @@ data "aws_iam_policy_document" "iam_assume_ecs" {
       identifiers = ["ecs-tasks.amazonaws.com"]
     }
   }
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::078432969830:user/ghopper"]
+    }
+  }
 }
 
 data "aws_iam_policy_document" "iam_assume_authenticated" {
@@ -75,17 +82,8 @@ resource "aws_iam_policy" "iam_task" {
 
 data "aws_iam_policy_document" "iam_task" {
   statement {
-    actions = ["s3:*"]
-    resources = [
-      aws_s3_bucket.s3_upload.arn,
-      "${aws_s3_bucket.s3_upload.arn}/*",
-      "arn:aws:s3:::${var.s3_artifacts_bucket}",
-      "arn:aws:s3:::${var.s3_artifacts_bucket}/*",
-      "arn:aws:s3:::dbp-prod",
-      "arn:aws:s3:::dbp-prod/*",
-      "arn:aws:s3:::dbp-vid",
-      "arn:aws:s3:::dbp-vid/*",
-    ]
+    actions   = ["sts:AssumeRole"]
+    resources = [var.assume_role_arn]
   }
 }
 

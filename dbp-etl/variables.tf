@@ -67,12 +67,6 @@ variable "alias" {
   default = null
 }
 
-variable "dbs_aws_access_key_id" {
-  type    = string
-  default = null
-}
-
-variable "dbs_aws_secret_access_key" {
-  type    = string
-  default = null
+variable "assume_role_arn" {
+  type = string
 }

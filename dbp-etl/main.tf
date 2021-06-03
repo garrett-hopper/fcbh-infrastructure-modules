@@ -91,12 +91,8 @@ resource "aws_ecs_task_definition" "main" {
         value = var.s3_artifacts_bucket
       },
       {
-        name  = "DBS_AWS_ACCESS_KEY_ID"
-        value = var.dbs_aws_access_key_id
-      },
-      {
-        name  = "DBS_AWS_SECRET_ACCESS_KEY"
-        value = var.dbs_aws_secret_access_key
+        name  = "ASSUME_ROLE_ARN"
+        value = var.assume_role_arn
       },
     ]
   }])
