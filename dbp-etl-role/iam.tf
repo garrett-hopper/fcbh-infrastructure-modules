@@ -33,6 +33,11 @@ data "aws_iam_policy_document" "iam" {
     actions   = ["elastictranscoder:*"]
     resources = var.elastictranscoder_arns
   }
+
+  statement {
+    actions   = ["lambda:InvokeFunction"]
+    resources = var.lambda_function_arns
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "iam" {

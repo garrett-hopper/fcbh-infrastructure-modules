@@ -9,3 +9,7 @@ variable "s3_buckets" {
 variable "elastictranscoder_arns" {
   type = list(string)
 }
+
+variable "lambda_function_arns" {
+  type = list(string)
+}
